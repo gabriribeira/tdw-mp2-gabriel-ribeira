@@ -51,8 +51,8 @@ jobs:
         if: success()
 
       #- name: Build
-        #run: npm run build
-        #if: success()
+      #run: npm run build
+      #if: success()
 
       #- name: Deploy
       #  run: npx netlify-cli deploy --site ${{ secrets.NETLIFY_SITE_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --prod

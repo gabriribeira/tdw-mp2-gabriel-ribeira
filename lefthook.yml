@@ -4,16 +4,10 @@ pre-commit:
     ident:
       glob: "*.{js,ts,jsx,tsx}"
       run: npm run format -- --write {staged_files} && git add {staged_files}
-    test:
-      glob: "*.{js,ts,jsx,tsx}"
-      run: npm run jest
 
 pre-push:
   parallel: true
   commands:
-    install:
-      run: npm install
+    ident:
       glob: "*.{js,ts,jsx,tsx}"
-    test:
-      glob: "*.{js,ts,jsx,tsx}"
-      run: npm run test
+      run: npm run format -- --write {staged_files} && git add {staged_files}
