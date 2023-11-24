@@ -52,27 +52,38 @@ const spotifyApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getTracks: builder.query({
-      query: (term) => `search?q=${term}&type=track`,
-    }),
-    getAlbums: builder.query({
-      query: (term) => `search?q=${term}&type=album`,
-    }),
-    getArtist: builder.query({
-      query: (term) => `search?q=${term}&type=artist`,
-    }),
     getPlaylist: builder.query({
       query: () => `playlists/5LjMoUjVPKDZyaSj5ynLWA/tracks`,
     }),
-    // Add more endpoints as needed
+    getAlbumById: builder.query({
+      query: (term) => `albums/${term}`,
+    }),
+    getArtistById: builder.query({
+      query: (term) => `artists/${term}`,
+    }),
+    getArtistTopTracksById: builder.query({
+      query: (term) => `artists/${term}/top-tracks?market=US`,
+    }),
+    getArtistAlbumsById: builder.query({
+      query: (term) =>
+        `artists/${term}/albums?market=US&include_groups=album,single`,
+    }),
+    getSearch: builder.query({
+      query: (term) => `search?q=${term}&type=track,artist,album&limit=20`,
+    }),
+    getRecommendationsByTrack: builder.query({
+      query: (term) => `recommendations?seed_tracks=${term}&limit=20`,
+    }),
   }),
 });
 
 export const {
-  useGetTracksQuery,
-  useGetAlbumsQuery,
-  useGetArtistQuery,
   useGetPlaylistQuery,
+  useGetAlbumByIdQuery,
+  useGetArtistByIdQuery,
+  useGetArtistTopTracksByIdQuery,
+  useGetSearchQuery,
+  useGetRecommendationsByTrackQuery,
 } = spotifyApi;
 
 export default spotifyApi;
