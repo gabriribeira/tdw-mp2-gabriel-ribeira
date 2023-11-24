@@ -9,14 +9,20 @@ const HomepageSlider = (props) => {
   const [track, setTrack] = useState(null);
   const audioRef = useRef(null);
   function playTrack(track) {
-    setTrack(track);
-    setPlaying(true);
     if (audioRef.current) {
-      audioRef.current.src = track; // Set the source to the new track
-      audioRef.current.load(); // Load the new audio track
-      audioRef.current.play().catch((error) => console.error(error));
+      setTrack(track);
+      setPlaying(true);
+
+      audioRef.current.pause();
+      audioRef.current.src = track;
+      audioRef.current.load();
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+        setPlaying(false);
+      });
     }
   }
+
   function pauseTrack() {
     setPlaying(false);
     setTrack(null);
@@ -41,13 +47,17 @@ const HomepageSlider = (props) => {
                 {item.track.preview_url && (
                   <button
                     onClick={() => {
-                      playing
+                      playing && track == item.track.preview_url
                         ? pauseTrack()
                         : playTrack(item.track.preview_url);
                     }}
                     className="text-6xl"
                   >
-                    {playing ? <AiOutlinePause /> : <CiPlay1 />}
+                    {playing && track == item.track.preview_url ? (
+                      <AiOutlinePause />
+                    ) : (
+                      <CiPlay1 />
+                    )}
                   </button>
                 )}
               </div>
