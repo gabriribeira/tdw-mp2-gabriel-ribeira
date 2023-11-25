@@ -82,6 +82,7 @@ export const {
   useGetAlbumByIdQuery,
   useGetArtistByIdQuery,
   useGetArtistTopTracksByIdQuery,
+  useGetArtistAlbumsByIdQuery,
   useGetSearchQuery,
   useGetRecommendationsByTrackQuery,
 } = spotifyApi;
