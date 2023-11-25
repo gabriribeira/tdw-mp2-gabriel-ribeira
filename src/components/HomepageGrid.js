@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { CiPlay1 } from "react-icons/ci";
 import { AiOutlinePause } from "react-icons/ai";
+import DefaultImage from "../assets/default.jpg";
 
 const HomepageSlider = (props) => {
   const data = props.data;
@@ -64,7 +65,11 @@ const HomepageSlider = (props) => {
               <div className="flex justify-end"></div>
             </div>
             <img
-              src={item.track.album.images[0].url}
+              src={
+                item.track.album.images[0]
+                  ? item.track.album.images[0].url
+                  : DefaultImage
+              }
               alt={item.track.album.name}
               className="group-hover:opacity-50 transition-all duration-[0.2s]"
             />

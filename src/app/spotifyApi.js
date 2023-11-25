@@ -69,7 +69,7 @@ const spotifyApi = createApi({
         `artists/${term}/albums?market=US&include_groups=album,single`,
     }),
     getSearch: builder.query({
-      query: (term) => `search?q=${term}&type=track,artist,album&limit=20`,
+      query: (term) => `search?q=${term}&type=track,artist,album&limit=10`,
     }),
     getRecommendationsByTrack: builder.query({
       query: (term) => `recommendations?seed_tracks=${term}&limit=20`,
