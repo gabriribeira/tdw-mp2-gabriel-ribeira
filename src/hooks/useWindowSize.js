@@ -4,7 +4,7 @@ function useWindowSize() {
   const [state, setState] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-    isMobile: window.innerWidth <= "640px",
+    isMobile: window.innerWidth <= "640",
     isTablet: window.innerWidth <= "1024" && window.innerWidth >= "640",
     isDesktop: window.innerWidth >= "1024",
   });
@@ -12,7 +12,7 @@ function useWindowSize() {
     setState({
       width: window.innerWidth,
       height: window.innerHeight,
-      isMobile: window.innerWidth <= "640px",
+      isMobile: window.innerWidth <= "640",
       isTablet: window.innerWidth <= "1024" && window.innerWidth >= "640",
       isDesktop: window.innerWidth >= "1024",
     });
