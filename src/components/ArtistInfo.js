@@ -8,8 +8,8 @@ const ArtistInfo = ({ artistData, topTracksData }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   return (
     artistData && (
-      <div className="flex w-full">
-        <div className="w-[50vw] h-[50vw] relative">
+      <div className="flex lg:flex-row flex-col w-full h-auto">
+        <div className="lg:w-[50vw] lg:h-auto w-screen h-[50vh] relative">
           <img
             src={artistData.images[0] ? artistData.images[0].url : DefaultImage}
             alt={artistData.name}
@@ -25,8 +25,8 @@ const ArtistInfo = ({ artistData, topTracksData }) => {
             />
           )}
         </div>
-        <div className="w-[50vw] h-[50vw] bg-[#2b2b2b] flex flex-col justify-between">
-          <h1 className="text-white font-bold text-[9rem] leading-none uppercase pl-10 pt-5">
+        <div className="lg:w-[50vw] lg:min-h-[50w] lg:h-auto w-screen h-full bg-[#2b2b2b] flex flex-col justify-between">
+          <h1 className="text-white font-bold lg:text-[9rem] text-[5rem] leading-none uppercase lg:pl-10 pl-5 pt-5 text-wrap">
             {artistData.name}
           </h1>
           <ArtistTopTracks

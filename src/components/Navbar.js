@@ -26,7 +26,7 @@ const Navbar = () => {
     }
   }, [location.pathname]);
   return (
-    <nav className="w-screen sticky top-0 flex md:justify-center justify-between items-center bg-transparent text-[#2b2b2b] font-bold xl:text-[5rem] lg:text-[4rem] md:text-[3rem] text-[2rem] md:py-0 md:px-0 py-2 px-2 whitespace-pre z-[100] bg-white">
+    <nav className="w-screen sticky top-0 flex md:justify-center justify-between items-center bg-transparent text-[#2b2b2b] font-bold xl:text-[4.5rem] lg:text-[3.8rem] md:text-[2.3rem] text-[2rem] md:py-0 md:px-0 py-2 px-2 whitespace-pre z-[100] bg-white">
       {location.pathname !== "/" && (
         <Link to={"/"} className="md:block hidden">
           HOME .
@@ -50,7 +50,9 @@ const Navbar = () => {
           PROFILE
         </Link>
       )}
-      <button className="md:hidden block">MEEM</button>
+      <Link className="md:hidden block" to={"/"}>
+        MEEM
+      </Link>
       <button
         className="md:hidden block"
         onClick={() => {
