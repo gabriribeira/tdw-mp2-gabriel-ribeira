@@ -4,7 +4,7 @@ import { CiPlay1 } from "react-icons/ci";
 import { AiOutlinePause } from "react-icons/ai";
 import DefaultImage from "../assets/default.jpg";
 
-const HomepageSlider = (props) => {
+const HomepageGrid = (props) => {
   const data = props.data;
   const [playing, setPlaying] = useState(false);
   const [track, setTrack] = useState(null);
@@ -87,13 +87,14 @@ const HomepageSlider = (props) => {
         controls={false}
         type="audio/mpeg"
         className=""
+        onEnded={pauseTrack}
       ></audio>
     </div>
   );
 };
 
-HomepageSlider.propTypes = {
+HomepageGrid.propTypes = {
   data: PropTypes.object,
 };
 
-export default HomepageSlider;
+export default HomepageGrid;

@@ -72,16 +72,17 @@ const SearchResults = (props) => {
             </div>
             {results &&
               results.albums.items.map((result) => (
-                <div
+                <Link
                   key={result.id}
                   className="w-[15vw] h-[15vw] relative flex justify-center items-center"
+                  to={`/album/${result.id}`}
                 >
                   <img
                     src={result.images[0] ? result.images[0].url : DefaultImage}
                     alt={result.name}
                     className="object-cover absolute w-full h-full top-0 left-0"
                   />
-                </div>
+                </Link>
               ))}
           </div>
         </div>
@@ -102,10 +103,13 @@ const SearchResults = (props) => {
                   className="w-[15vw] h-[15vw] relative flex justify-center items-center group"
                 >
                   <div className="group-hover:block hidden transition-all duration-[0.2s] absolute hidden w-full h-full p-5 z-[10]">
-                    <div className="flex flex-col items-start font-bold text-2xl text-left">
+                    <Link
+                      className="flex flex-col items-start font-bold text-2xl text-left z-[50]"
+                      to={`/album/${result.album.id}`}
+                    >
                       <p>{result.name}</p>
                       <p>{result.artists[0].name}</p>
-                    </div>
+                    </Link>
                     <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
                       {result.preview_url && (
                         <button
@@ -151,6 +155,7 @@ const SearchResults = (props) => {
         controls={false}
         type="audio/mpeg"
         className=""
+        onEnded={pauseTrack}
       ></audio>
     </div>
   );
