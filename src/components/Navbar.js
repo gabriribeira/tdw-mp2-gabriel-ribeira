@@ -58,7 +58,7 @@ const Navbar = () => {
             MEEMS {location.pathname !== "/profile" && "."}
           </Link>
         )}
-        {location.pathname !== "/profile" && token !== null && user !== null ? (
+        {location.pathname !== "/profile" && user !== null ? (
           <Link to={"/profile"} className="md:block hidden">
             {" "}
             PROFILE
