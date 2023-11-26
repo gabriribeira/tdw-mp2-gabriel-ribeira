@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CSSTransition } from "react-transition-group";
 import AuthModal from "./AuthModal";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const location = useLocation();
@@ -27,6 +28,13 @@ const Navbar = () => {
         break;
     }
   }, [location.pathname]);
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
+  useEffect(() => {
+    console.log(token);
+    console.log(user);
+  }, [token, user]);
+
   return (
     <>
       {authModalOpen && (
@@ -50,13 +58,12 @@ const Navbar = () => {
             MEEMS {location.pathname !== "/profile" && "."}
           </Link>
         )}
-        {/*location.pathname !== "/profile" && (
-        <Link to={"/profile"} className="md:block hidden">
-          {" "}
-          PROFILE
-        </Link>
-      )*/}
-        {location.pathname !== "/profile" && (
+        {location.pathname !== "/profile" && token !== null && user !== null ? (
+          <Link to={"/profile"} className="md:block hidden">
+            {" "}
+            PROFILE
+          </Link>
+        ) : (
           <button
             className="md:block hidden"
             onClick={() => setAuthModalOpen(true)}
