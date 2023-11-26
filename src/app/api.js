@@ -14,10 +14,14 @@ export const api = createApi({
       onQuerySuccess: (data) => {
         const dispatch = useDispatch();
         dispatch(setToken(data.token));
+        api.setHeader("Authorization", `Bearer ${data.token}`);
       },
     }),
     getUser: builder.query({
-      query: (id) => `users/${id}`,
+      query: () => ({
+        url: "users/profile",
+        method: "GET",
+      }),
     }),
     updateUser: builder.mutation({
       query: ({ id, data }) => ({
@@ -29,4 +33,9 @@ export const api = createApi({
   }),
 });
 
-export const { useLoginMutation, useGetUserQuery, useUpdateUserMutation } = api;
+export const {
+  useGetAuthQuery,
+  useLoginMutation,
+  useGetUserQuery,
+  useUpdateUserMutation,
+} = api;

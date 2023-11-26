@@ -41,7 +41,7 @@ const AuthModal = ({ closeModal }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-[#2b2b2b]/50 flex justify-center items-center z-[101]">
-      <div className="w-[40vw] h-[50vh] rounded-lg bg-[#2b2b2b] overflow-y-auto absolute flex flex-col p-10">
+      <div className="xl:w-[40vw] lg:w-[50vw] md:w-[70vw] w-[90vw] md:h-[50vh] h-[30vh] rounded-lg bg-[#2b2b2b] overflow-y-auto absolute flex flex-col lg:p-10 p-5">
         <h1 className="absolute left-3 top-3 text-2xl text-white font-bold">
           MEEM
         </h1>
@@ -65,21 +65,24 @@ const AuthModal = ({ closeModal }) => {
           />
           <div className="w-full relative items-center flex">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="PASSWORD"
               className="bg-transparent text-white px-2 border-b-2 border-white w-full focus:outline-none"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
             <button
+              type="button"
               className="right-2 absolute text-white/50 text-xl"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <BsEyeFill /> : <BsEyeSlash />}
             </button>
           </div>
-          <div className="flex items-center justify-between w-full text-white text-lg">
-            <button className="underline">DONT HAVE AN ACCOUNT? SIGN UP</button>
+          <div className="flex md:flex-row flex-col-reverse items-center justify-between w-full text-white text-lg">
+            <button className="underline md:text-lg text-sm md:pt-0 pt-5">
+              DONT HAVE AN ACCOUNT? SIGN UP
+            </button>
             {isError && <p>Login failed. Please try again.</p>}
             <button type="submit" disabled={isLoading}>
               {isLoading ? "LOGGING IN..." : "LOGIN"}
