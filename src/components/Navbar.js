@@ -28,12 +28,7 @@ const Navbar = () => {
         break;
     }
   }, [location.pathname]);
-  const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
-  useEffect(() => {
-    console.log(token);
-    console.log(user);
-  }, [token, user]);
 
   return (
     <>
@@ -58,18 +53,28 @@ const Navbar = () => {
             MEEMS {location.pathname !== "/profile" && "."}
           </Link>
         )}
-        {location.pathname !== "/profile" && user !== null ? (
+        {location.pathname !== "/profile" && user !== null && (
           <Link to={"/profile"} className="md:block hidden">
             {" "}
             PROFILE
           </Link>
-        ) : (
+        )}
+        {location.pathname !== "/profile" && user === null && (
           <button
             className="md:block hidden"
             onClick={() => setAuthModalOpen(true)}
           >
             {" "}
             ENTER
+          </button>
+        )}
+        {location.pathname === "/profile" && user !== null && (
+          <button
+            className="md:block hidden"
+            onClick={() => setAuthModalOpen(true)}
+          >
+            {". "}
+            LOGOUT
           </button>
         )}
         <Link className="md:hidden block" to={"/"}>

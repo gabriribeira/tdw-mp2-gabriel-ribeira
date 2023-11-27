@@ -17,12 +17,6 @@ export const api = createApi({
         api.setHeader("Authorization", `Bearer ${data.token}`);
       },
     }),
-    getUser: builder.query({
-      query: () => ({
-        url: "users/profile",
-        method: "GET",
-      }),
-    }),
     updateUser: builder.mutation({
       query: ({ id, data }) => ({
         url: `user/${id}`,
@@ -30,12 +24,11 @@ export const api = createApi({
         body: data,
       }),
     }),
+    getCalendar: builder.query({
+      query: (user_id) => `calendar/${user_id}`,
+    }),
   }),
 });
 
-export const {
-  useGetAuthQuery,
-  useLoginMutation,
-  useGetUserQuery,
-  useUpdateUserMutation,
-} = api;
+export const { useLoginMutation, useUpdateUserMutation, useGetCalendarQuery } =
+  api;
