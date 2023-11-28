@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DefaultImage from "../assets/default.jpg";
 import ArtistTopTracks from "./ArtistTopTracks";
 
 //eslint-disable-next-line
 const ArtistInfo = ({ artistData, topTracksData }) => {
+  useEffect(() => {
+    console.log(artistData);
+  }, [artistData]);
   const [isPlaying, setIsPlaying] = useState(false);
   return (
     artistData && (

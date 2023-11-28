@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import AlbumInfo from "../components/AlbumInfo";
-import { useGetAlbumByIdQuery } from "../app/spotifyApi";
+import { useGetAlbumByIdSingularQuery } from "../app/spotifyApi";
 
 const Album = () => {
   const { id } = useParams();
 
   //eslint-disable-next-line
-  const { data: albumsData, error: artistError } = useGetAlbumByIdQuery(id);
+  const { data: albumsData, error: artistError } =
+    useGetAlbumByIdSingularQuery(id);
 
   useEffect(() => {
     document.title = albumsData

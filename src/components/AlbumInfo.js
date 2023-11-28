@@ -4,7 +4,6 @@ import DefaultImage from "../assets/default.jpg";
 import AlbumTracks from "./AlbumTracks";
 
 const AlbumInfo = ({ albumData }) => {
-  console.log(albumData);
   const [isPlaying, setIsPlaying] = useState(false);
   return (
     albumData && (

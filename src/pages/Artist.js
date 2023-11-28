@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import ArtistInfo from "../components/ArtistInfo";
 import ArtistAlbums from "../components/ArtistAlbums";
 import {
-  useGetArtistByIdQuery,
+  useGetArtistByIdSingularQuery,
   useGetArtistTopTracksByIdQuery,
   useGetArtistAlbumsByIdQuery,
 } from "../app/spotifyApi";
@@ -13,7 +13,8 @@ const Artist = () => {
   const { id } = useParams();
 
   //eslint-disable-next-line
-  const { data: artistData, error: artistError } = useGetArtistByIdQuery(id);
+  const { data: artistData, error: artistError } =
+    useGetArtistByIdSingularQuery(id);
   //eslint-disable-next-line
   const { data: topTracksData, error: topTracksError } =
     useGetArtistTopTracksByIdQuery(id);
