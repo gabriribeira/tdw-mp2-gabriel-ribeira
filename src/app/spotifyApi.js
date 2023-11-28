@@ -55,6 +55,15 @@ const spotifyApi = createApi({
     getPlaylist: builder.query({
       query: () => `playlists/5LjMoUjVPKDZyaSj5ynLWA/tracks`,
     }),
+    getTrackByIdSingular: builder.query({
+      query: (term) => `tracks/${term}`,
+    }),
+    getAlbumByIdSingular: builder.query({
+      query: (term) => `albums/${term}`,
+    }),
+    getArtistByIdSingular: builder.query({
+      query: (term) => `artists/${term}`,
+    }),
     getTrackById: builder.query({
       query: (term) => `tracks?ids=${term}`,
     }),
@@ -82,6 +91,9 @@ const spotifyApi = createApi({
 
 export const {
   useGetPlaylistQuery,
+  useGetTrackByIdSingularQuery,
+  useGetAlbumByIdSingularQuery,
+  useGetArtistByIdSingularQuery,
   useGetTrackByIdQuery,
   useGetAlbumByIdQuery,
   useGetArtistByIdQuery,
