@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-
 import { useGetCalendarQuery } from "../app/api";
 import { useSelector } from "react-redux";
-
 import CalendarView from "./CalendarView";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  //eslint-disable-next-line
   const user = useSelector((state) => state.auth.user);
-  //eslint-disable-next-line
   const { data: calendar, error, isLoading } = useGetCalendarQuery(user.id);
   const handlePrevMonth = () => {
     setCurrentDate(
@@ -25,19 +22,25 @@ const Calendar = () => {
     );
   };
   return (
-    <div className="w-full bg-white text-[#2b2b2b] flex">
+    <div className="w-full bg-[#2b2b2b] text-white flex">
       <div className="w-full flex flex-col">
-        <div className="calendar-header flex justify-between items-center mb-10">
-          <button onClick={handlePrevMonth}>&lt;</button>
-          <h2>
+        <div className="flex items-center justify-center md:text-2xl text-xl font-bold mb-5 md:gap-x-5 gap-x-2">
+          <button onClick={handlePrevMonth}>
+            <SlArrowLeft />
+          </button>
+          <h2 className="uppercase">
+            {user.name.split(" ")[0]}
+            {"'s "}
             {new Intl.DateTimeFormat("en-US", {
               month: "long",
               year: "numeric",
             }).format(currentDate)}
           </h2>
-          <button onClick={handleNextMonth}>&gt;</button>
+          <button onClick={handleNextMonth}>
+            <SlArrowRight />
+          </button>
         </div>
-        {!isLoading && (
+        {!isLoading && !error && (
           <CalendarView entries={calendar} currentDate={currentDate} />
         )}
       </div>
