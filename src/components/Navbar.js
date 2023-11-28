@@ -95,16 +95,25 @@ const Navbar = () => {
           unmountOnExit
         >
           <div className="absolute md:hidden top-[100%] left-0 w-[100vw] h-auto bg-white z-[100] flex flex-col justify-center items-end px-2">
-            <Link to={"/"} className="my-2">
+            <Link to={"/"} className="my-2 hover:font-bold hover:underline">
               HOME
             </Link>
-            <Link to={"/search"} className="my-2">
+            <Link
+              to={"/search"}
+              className="my-2 hover:font-bold hover:underline"
+            >
               SEARCH
             </Link>
-            <Link to={"/meems"} className="my-2">
+            <Link
+              to={"/meems"}
+              className="my-2 hover:font-bold hover:underline"
+            >
               MEEMS
             </Link>
-            <Link to={"/profile"} className="my-2">
+            <Link
+              to={"/profile"}
+              className="my-2 hover:font-bold hover:underline"
+            >
               PROFILE
             </Link>
           </div>
