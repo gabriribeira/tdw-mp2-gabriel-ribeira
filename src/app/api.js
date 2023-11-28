@@ -27,8 +27,23 @@ export const api = createApi({
     getCalendar: builder.query({
       query: (user_id) => `calendar/${user_id}`,
     }),
+    getUserTracks: builder.query({
+      query: (user_id) => `tracks/${user_id}`,
+    }),
+    getUserAlbums: builder.query({
+      query: (user_id) => `albums/${user_id}`,
+    }),
+    getUserArtists: builder.query({
+      query: (user_id) => `artists/${user_id}`,
+    }),
   }),
 });
 
-export const { useLoginMutation, useUpdateUserMutation, useGetCalendarQuery } =
-  api;
+export const {
+  useLoginMutation,
+  useUpdateUserMutation,
+  useGetCalendarQuery,
+  useGetUserTracksQuery,
+  useGetUserAlbumsQuery,
+  useGetUserArtistsQuery,
+} = api;
