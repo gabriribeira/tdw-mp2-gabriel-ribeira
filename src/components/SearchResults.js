@@ -1,10 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import DefaultImage from "../assets/default.jpg";
-import { CiPlay1 } from "react-icons/ci";
-import { AiOutlinePause } from "react-icons/ai";
 import useWindowSize from "../hooks/useWindowSize";
+import ItemOverlay from "./ItemOverlay";
 
 const SearchResults = (props) => {
   const results = props.data;
@@ -12,6 +9,7 @@ const SearchResults = (props) => {
   const [track, setTrack] = useState(null);
   const audioRef = useRef(null);
   const { isMobile, isTablet, isDesktop } = useWindowSize();
+  const [trackModal, setTrackModal] = useState(null);
   function playTrack(track) {
     if (audioRef.current) {
       setTrack(track);
@@ -35,10 +33,6 @@ const SearchResults = (props) => {
     }
   }
 
-  useEffect(() => {
-    console.log(isMobile, isTablet, isDesktop);
-  }, [isMobile, isTablet, isDesktop]);
-
   return (
     <div className="flex flex-col w-full">
       {results && results.artists.items.length > 0 && (
@@ -59,18 +53,17 @@ const SearchResults = (props) => {
               <h1 className="-rotate-90">ARTISTS</h1>
             </div>
             {results &&
-              results.artists.items.map((result) => (
-                <Link
-                  key={result.id}
-                  className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex justify-center items-center"
-                  to={`/artist/${result.id}`}
-                >
-                  <img
-                    src={result.images[0] ? result.images[0].url : DefaultImage}
-                    alt={result.name}
-                    className="object-cover absolute w-full h-full top-0 left-0"
-                  />
-                </Link>
+              results.artists.items.map((result, index) => (
+                <ItemOverlay
+                  key={index}
+                  item={result}
+                  trackModal={trackModal}
+                  setTrackModal={setTrackModal}
+                  track={track}
+                  playTrack={playTrack}
+                  pauseTrack={pauseTrack}
+                  playing={playing}
+                />
               ))}
           </div>
         </div>
@@ -93,18 +86,17 @@ const SearchResults = (props) => {
               <h1 className="-rotate-90">ALBUMS</h1>
             </div>
             {results &&
-              results.albums.items.map((result) => (
-                <Link
-                  key={result.id}
-                  className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex justify-center items-center"
-                  to={`/album/${result.id}`}
-                >
-                  <img
-                    src={result.images[0] ? result.images[0].url : DefaultImage}
-                    alt={result.name}
-                    className="object-cover absolute w-full h-full top-0 left-0"
-                  />
-                </Link>
+              results.albums.items.map((result, index) => (
+                <ItemOverlay
+                  key={index}
+                  item={result}
+                  trackModal={trackModal}
+                  setTrackModal={setTrackModal}
+                  track={track}
+                  playTrack={playTrack}
+                  pauseTrack={pauseTrack}
+                  playing={playing}
+                />
               ))}
           </div>
         </div>
@@ -127,55 +119,17 @@ const SearchResults = (props) => {
               <h1 className="-rotate-90">TRACKS</h1>
             </div>
             {results &&
-              results.tracks.items.map((result) => (
-                <div
-                  key={result.id}
-                  className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex justify-center items-center group"
-                >
-                  <div className="group-hover:block hidden transition-all duration-[0.2s] absolute hidden w-full h-full p-5 z-[10]">
-                    <Link
-                      className="flex flex-col items-start font-bold text-2xl text-left z-[50]"
-                      to={`/album/${result.album.id}`}
-                    >
-                      <p>{result.name}</p>
-                      <p>{result.artists[0].name}</p>
-                    </Link>
-                    <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
-                      {result.preview_url && (
-                        <button
-                          onClick={() => {
-                            playing && track == result.preview_url
-                              ? pauseTrack()
-                              : playTrack(result.preview_url);
-                          }}
-                          className="text-6xl"
-                        >
-                          {playing && track == result.preview_url ? (
-                            <AiOutlinePause />
-                          ) : (
-                            <CiPlay1 />
-                          )}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  <img
-                    src={
-                      result.album.images[0]
-                        ? result.album.images[0].url
-                        : DefaultImage
-                    }
-                    alt={result.name}
-                    className="object-cover absolute w-full h-full top-0 left-0 group-hover:opacity-50 transition-all duration-[0.2s]"
-                  />
-                  {result.preview_url && track == result.preview_url && (
-                    <img
-                      src={result.album.images[0].url}
-                      alt={result.album.name}
-                      className="absolute top-0 left-0 w-full h-full group-hover:opacity-50 rounded-full animate-spinner transition-all duration-[0.2s]"
-                    />
-                  )}
-                </div>
+              results.tracks.items.map((result, index) => (
+                <ItemOverlay
+                  key={index}
+                  item={result}
+                  trackModal={trackModal}
+                  setTrackModal={setTrackModal}
+                  track={track}
+                  playTrack={playTrack}
+                  pauseTrack={pauseTrack}
+                  playing={playing}
+                />
               ))}
           </div>
         </div>
