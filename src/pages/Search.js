@@ -17,7 +17,7 @@ const Search = () => {
     }
   }, [results, error]);
   return (
-    <div className="">
+    <div className="min-h-screen">
       <Navbar />
       <div className="relative flex sticky xl:top-[10vh] lg:top-[7vh] md:top-[5vh] top-[4vh] z-[90] overflow-hidden">
         <input
