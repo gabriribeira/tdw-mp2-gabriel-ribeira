@@ -6,7 +6,7 @@ function useWindowSize() {
     height: window.innerHeight,
     isMobile: window.innerWidth <= "640",
     isTablet: window.innerWidth <= "1024" && window.innerWidth >= "640",
-    isDesktop: window.innerWidth >= "1024",
+    isDesktop: window.innerWidth >= "1024" && window.innerWidth <= "1280",
   });
   function handleResize() {
     setState({
@@ -14,7 +14,7 @@ function useWindowSize() {
       height: window.innerHeight,
       isMobile: window.innerWidth <= "640",
       isTablet: window.innerWidth <= "1024" && window.innerWidth >= "640",
-      isDesktop: window.innerWidth >= "1024",
+      isDesktop: window.innerWidth >= "1024" && window.innerWidth <= "1280",
     });
   }
   useEffect(() => {
