@@ -15,6 +15,7 @@ const ItemOverlay = ({
   playTrack,
   pauseTrack,
   playing,
+  calendar,
 }) => {
   const [itemType, setItemType] = useState(null);
   useEffect(() => {
@@ -27,6 +28,9 @@ const ItemOverlay = ({
     } else if (item.type == "artist") {
       setItemType("artist");
     }
+    if (calendar) {
+      setItemType("calendar");
+    }
   }, [item]);
 
   return (
@@ -36,14 +40,16 @@ const ItemOverlay = ({
         className={
           itemType == "playlistTrack"
             ? "flex flex-col col-span-1 group relative"
-            : "xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex flex-col group"
+            : itemType == "calendar"
+              ? "absolute top-0 left-0 w-full group"
+              : "xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex flex-col group"
         }
       >
         <div
-          className="group-hover:block hidden transition-all duration-[0.2s] absolute hidden w-full h-full p-3 z-[10]"
+          className="group-hover:block hidden transition-all duration-[0.2s] absolute hidden w-full h-full lg:p-3 p-1 z-[10]"
           onMouseEnter={() => setTrackModal(null)}
         >
-          <div className="flex flex-col items-start text-xl text-left">
+          <div className="flex flex-col items-start lg:text-xl md:text-lg text-md text-left">
             {itemType == "playlistTrack" && (
               <Link
                 to={`/album/${item.track.album.id}`}
@@ -53,6 +59,14 @@ const ItemOverlay = ({
               </Link>
             )}
             {itemType == "track" && (
+              <Link
+                to={`/album/${item.album.id}`}
+                className="uppercase font-bold cursor-pointer z-[100]"
+              >
+                {item.name}
+              </Link>
+            )}
+            {itemType == "calendar" && (
               <Link
                 to={`/album/${item.album.id}`}
                 className="uppercase font-bold cursor-pointer z-[100]"
@@ -84,15 +98,30 @@ const ItemOverlay = ({
                 {item.track.artists[0].name}
               </Link>
             )}
-            {itemType == "track" ||
-              (itemType == "album" && (
-                <Link
-                  to={`/artist/${item.artists[0].id}`}
-                  className="uppercase cursor-pointer z-[100]"
-                >
-                  {item.artists[0].name}
-                </Link>
-              ))}
+            {itemType == "track" && (
+              <Link
+                to={`/artist/${item.artists[0].id}`}
+                className="uppercase cursor-pointer z-[100]"
+              >
+                {item.artists[0].name}
+              </Link>
+            )}
+            {itemType == "calendar" && (
+              <Link
+                to={`/artist/${item.artists[0].id}`}
+                className="uppercase cursor-pointer z-[100]"
+              >
+                {item.artists[0].name}
+              </Link>
+            )}
+            {itemType == "album" && (
+              <Link
+                to={`/artist/${item.artists[0].id}`}
+                className="uppercase cursor-pointer z-[100]"
+              >
+                {item.artists[0].name}
+              </Link>
+            )}
           </div>
           <button
             onClick={() =>
@@ -100,7 +129,7 @@ const ItemOverlay = ({
                 ? setTrackModal(null)
                 : setTrackModal(itemType == "playlistTrack" ? item.track : item)
             }
-            className="absolute top-5 right-5 text-4xl z-[102]"
+            className="absolute xl:top-5 xl:right-5 md:top-2 md:right-2 top-1 right-1 lg:text-4xl md:text-3xl text-2xl z-[102]"
           >
             <RxDotsHorizontal />
           </button>
@@ -112,7 +141,9 @@ const ItemOverlay = ({
               />
             )}
           <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
-            {(itemType == "playlistTrack" || itemType == "track") &&
+            {(itemType == "playlistTrack" ||
+              itemType == "track" ||
+              itemType == "calendar") &&
               (itemType == "playlistTrack"
                 ? item.track.preview_url
                 : item.preview_url) &&
@@ -123,7 +154,7 @@ const ItemOverlay = ({
                       ? pauseTrack()
                       : playTrack(item.track.preview_url);
                   }}
-                  className="text-6xl"
+                  className="lg:text-6xl md:text-5xl text-4xl"
                 >
                   {playing && track == item.track.preview_url ? (
                     <AiOutlinePause />
@@ -138,7 +169,7 @@ const ItemOverlay = ({
                       ? pauseTrack()
                       : playTrack(item.preview_url);
                   }}
-                  className="text-6xl"
+                  className="lg:text-6xl md:text-5xl text-4xl"
                 >
                   {playing && track == item.preview_url ? (
                     <AiOutlinePause />
@@ -161,6 +192,13 @@ const ItemOverlay = ({
           />
         )}
         {itemType == "track" && (
+          <img
+            src={item.album.images[0] ? item.album.images[0].url : DefaultImage}
+            alt={item.album.name}
+            className="group-hover:opacity-50 transition-all duration-[0.2s] h-full object-cover w-full"
+          />
+        )}
+        {itemType == "calendar" && (
           <img
             src={item.album.images[0] ? item.album.images[0].url : DefaultImage}
             alt={item.album.name}
@@ -200,6 +238,15 @@ const ItemOverlay = ({
               className="absolute top-0 left-0 w-full h-full group-hover:opacity-50 rounded-full animate-spinner transition-all duration-[0.2s]"
             />
           )}
+        {itemType == "calendar" &&
+          item.preview_url &&
+          track == item.preview_url && (
+            <img
+              src={item.album.images[0].url}
+              alt={item.album.name}
+              className="absolute top-0 left-0 w-full h-full group-hover:opacity-50 rounded-full animate-spinner transition-all duration-[0.2s]"
+            />
+          )}
       </div>
     )
   );
@@ -213,6 +260,7 @@ ItemOverlay.propTypes = {
   pauseTrack: PropTypes.func,
   track: PropTypes.string,
   playing: PropTypes.bool,
+  calendar: PropTypes.bool,
 };
 
 export default ItemOverlay;

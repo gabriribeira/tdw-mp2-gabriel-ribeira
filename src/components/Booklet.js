@@ -18,6 +18,7 @@ const Booklet = () => {
 
   useEffect(() => {
     if (tracks) {
+      console.log(tracks);
       let cleanTracksAux = "";
       tracks.map((track, index) => {
         if (index === tracks.length - 1) {
@@ -31,6 +32,7 @@ const Booklet = () => {
   }, [tracks]);
   useEffect(() => {
     if (albums) {
+      console.log(albums);
       let cleanAlbumsAux = "";
       albums.map((album, index) => {
         if (index === albums.length - 1) {
@@ -44,6 +46,7 @@ const Booklet = () => {
   }, [albums]);
   useEffect(() => {
     if (artists) {
+      console.log(artists);
       let cleanArtistsAux = "";
       artists.map((artist, index) => {
         if (index === artists.length - 1) {

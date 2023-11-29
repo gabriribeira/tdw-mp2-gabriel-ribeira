@@ -1,12 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { useGetTrackByIdQuery } from "../app/spotifyApi";
-import DefaultImage from "../assets/default.jpg";
+import ItemOverlay from "./ItemOverlay";
 
 const CalendarView = ({ entries, currentDate }) => {
   const [dateFormatted, setDateFormatted] = useState(null);
   const [calendar, setCalendar] = useState([]);
   const [allEntries, setAllEntries] = useState([]);
+  const [trackModal, setTrackModal] = useState(null);
+  const [playing, setPlaying] = useState(false);
+  const [track, setTrack] = useState(null);
+  const [refreshCalendar, setRefreshCalendar] = useState(false);
+  const audioRef = useRef(null);
+
+  function playTrack(track) {
+    if (audioRef.current) {
+      setTrack(track);
+      setPlaying(true);
+      setRefreshCalendar(true);
+      audioRef.current.pause();
+      audioRef.current.src = track;
+      audioRef.current.load();
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+        setPlaying(false);
+      });
+    }
+  }
+
+  function pauseTrack() {
+    setPlaying(false);
+    setTrack(null);
+    setRefreshCalendar(true);
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  }
 
   useEffect(() => {
     let allEntriesAux = "";
@@ -83,24 +112,27 @@ const CalendarView = ({ entries, currentDate }) => {
         calendar.push(
           <div
             key={day}
-            className="col-span-1 w-full pb-[100%] relative flex justify-center items-center"
+            className="col-span-1 w-full pb-[100%] relative flex justify-center items-center text-[#2b2b2b]"
           >
             {tracksInMonth[day] ? (
               <h1 className="absolute top-1 left-1 text-xl font-bold text-[#2b2b2b] z-[100]">
                 {day}
               </h1>
             ) : (
-              <h1 className="absolute top-1 left-1 text-xl font-bold">{day}</h1>
+              <h1 className="absolute top-1 left-1 text-xl text-white font-bold">
+                {day}
+              </h1>
             )}
             {tracksInMonth[day] && (
-              <img
-                src={
-                  tracksInMonth[day]
-                    ? tracksInMonth[day].album.images[0].url
-                    : DefaultImage
-                }
-                alt="Default"
-                className="w-full h-full absolute top-0 left-0"
+              <ItemOverlay
+                item={tracksInMonth[day]}
+                trackModal={trackModal}
+                setTrackModal={setTrackModal}
+                track={track}
+                playTrack={playTrack}
+                pauseTrack={pauseTrack}
+                playing={playing}
+                calendar={true}
               />
             )}
           </div>,
@@ -113,12 +145,26 @@ const CalendarView = ({ entries, currentDate }) => {
     if (dateFormatted && calendarTracks) {
       generateCalendar();
     }
-  }, [calendarTracks, dateFormatted]);
+
+    if (refreshCalendar || trackModal) {
+      setRefreshCalendar(false);
+      generateCalendar();
+    }
+  }, [calendarTracks, dateFormatted, refreshCalendar, trackModal]);
 
   return (
-    <div className="w-full grid lg:grid-cols-10 md:grid-cols-8 grid-cols-5 relative">
-      {calendar && calendar}
-    </div>
+    calendar && (
+      <div className="w-full grid lg:grid-cols-8 md:grid-cols-6 grid-cols-4 relative">
+        {calendar}
+        <audio
+          ref={audioRef}
+          controls={false}
+          type="audio/mpeg"
+          className=""
+          onEnded={pauseTrack}
+        ></audio>
+      </div>
+    )
   );
 };
 

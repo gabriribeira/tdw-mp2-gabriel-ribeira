@@ -12,10 +12,20 @@ import { useSelector } from "react-redux";
 const AddToModal = ({ item }) => {
   const user_id = useSelector((state) => state.auth.user.id);
   const [itemToAdd, setItemToAdd] = useState(null);
-
+  const [itemType, setItemType] = useState(null);
   useEffect(() => {
-    if (item) {
-      setItemToAdd(item.id);
+    if (item.track) {
+      setItemType("playlistTrack");
+      setItemToAdd(item);
+    } else if (item.type == "track") {
+      setItemType("track");
+      setItemToAdd(item);
+    } else if (item.type == "album") {
+      setItemType("album");
+      setItemToAdd(item);
+    } else if (item.type == "artist") {
+      setItemType("artist");
+      setItemToAdd(item);
     }
   }, [item]);
 
@@ -30,11 +40,11 @@ const AddToModal = ({ item }) => {
     useAddCalendarMutation();
 
   const handleAddArtist = () => {
-    addArtist({ user_id, itemToAdd });
+    addArtist({ user_id, artist_id: itemToAdd });
   };
 
   const handleAddAlbum = () => {
-    addAlbum({ user_id, itemToAdd });
+    addAlbum({ user_id, album_id: itemToAdd });
   };
 
   const handleAddTrack = () => {
@@ -46,8 +56,8 @@ const AddToModal = ({ item }) => {
   };
 
   return (
-    <div className="z-[101] bg-white absolute top-4 right-3 w-auto h-auto flex p-3 pt-8 flex flex-col items-end text-[#2b2b2b] text-lg">
-      {item.type == "track" && (
+    <div className="z-[101] bg-white absolute xl:top-5 xl:right-3 lg:top-3 lg:right-1 md:top-2 md:right-1 top-0 right-0 w-auto h-auto flex md:p-3 p-2 md:pt-8 pt-6 flex flex-col items-end text-[#2b2b2b] md:text-lg text-md">
+      {(itemType == "track" || itemType == "playlistTrack") && (
         <button
           onClick={handleAddTrackToCalendar}
           className="w-full text-end hover:font-bold hover:underline"
@@ -57,9 +67,9 @@ const AddToModal = ({ item }) => {
       )}
       <button
         onClick={
-          item.type == "track"
+          itemType == "track"
             ? handleAddTrack
-            : item.type == "album"
+            : itemType == "album"
               ? handleAddAlbum
               : handleAddArtist
         }
@@ -67,15 +77,41 @@ const AddToModal = ({ item }) => {
       >
         ADD TO BOOKLET
       </button>
-      <Link
-        to={`/artist/${item.artists[0].id}`}
-        className="w-full text-end hover:font-bold hover:underline"
-      >
-        GO TO ARTIST
-      </Link>
-      {(item.type == "track" || item.type == "album") && (
+      {(itemType == "track" || itemType == "playlistTrack") && (
+        <Link
+          to={`/artist/${item.artists[0].id}`}
+          className="w-full text-end hover:font-bold hover:underline"
+        >
+          GO TO ARTIST
+        </Link>
+      )}
+      {itemType == "album" && (
+        <Link
+          to={`/artist/${item.artists[0].id}`}
+          className="w-full text-end hover:font-bold hover:underline"
+        >
+          GO TO ARTIST
+        </Link>
+      )}
+      {itemType == "artist" && (
+        <Link
+          to={`/artist/${item.id}`}
+          className="w-full text-end hover:font-bold hover:underline"
+        >
+          GO TO ARTIST
+        </Link>
+      )}
+      {(itemType == "track" || itemType == "playlistTrack") && (
         <Link
           to={`/album/${item.album.id}`}
+          className="w-full text-end hover:font-bold hover:underline"
+        >
+          GO TO ALBUM
+        </Link>
+      )}
+      {itemType == "album" && (
+        <Link
+          to={`/album/${item.id}`}
           className="w-full text-end hover:font-bold hover:underline"
         >
           GO TO ALBUM
