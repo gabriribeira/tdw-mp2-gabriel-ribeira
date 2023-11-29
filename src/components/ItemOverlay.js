@@ -9,6 +9,7 @@ import { CiPlay1 } from "react-icons/ci";
 
 const ItemOverlay = ({
   item,
+  itemDb,
   trackModal,
   setTrackModal,
   track,
@@ -49,7 +50,13 @@ const ItemOverlay = ({
           className="group-hover:block hidden transition-all duration-[0.2s] absolute hidden w-full h-full lg:p-3 p-1 z-[10]"
           onMouseEnter={() => setTrackModal(null)}
         >
-          <div className="flex flex-col items-start lg:text-xl md:text-lg text-md text-left">
+          <div
+            className={
+              itemType == "calendar"
+                ? "flex flex-col items-start lg:text-lg md:text-md text-sm text-left"
+                : "flex flex-col items-start lg:text-xl md:text-lg text-md text-left"
+            }
+          >
             {itemType == "playlistTrack" && (
               <Link
                 to={`/album/${item.track.album.id}`}
@@ -129,7 +136,11 @@ const ItemOverlay = ({
                 ? setTrackModal(null)
                 : setTrackModal(itemType == "playlistTrack" ? item.track : item)
             }
-            className="absolute xl:top-5 xl:right-5 md:top-2 md:right-2 top-1 right-1 lg:text-4xl md:text-3xl text-2xl z-[102]"
+            className={
+              itemType == "calendar"
+                ? "absolute xl:top-2 xl:right-2 md:top-1 md:right-1 top-1 right-1 lg:text-3xl md:text-2xl text-xl z-[102]"
+                : "absolute xl:top-5 xl:right-5 md:top-2 md:right-2 top-1 right-1 lg:text-4xl md:text-3xl text-2xl z-[102]"
+            }
           >
             <RxDotsHorizontal />
           </button>
@@ -138,6 +149,8 @@ const ItemOverlay = ({
               (itemType == "playlistTrack" ? item.track.id : item.id) && (
               <AddToModal
                 item={itemType == "playlistTrack" ? item.track : item}
+                itemDb={itemDb}
+                calendar={itemType == "calendar" ? true : false}
               />
             )}
           <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
@@ -254,6 +267,7 @@ const ItemOverlay = ({
 
 ItemOverlay.propTypes = {
   item: PropTypes.object.isRequired,
+  itemDb: PropTypes.object,
   trackModal: PropTypes.object,
   setTrackModal: PropTypes.func,
   playTrack: PropTypes.func,

@@ -35,10 +35,10 @@ export const api = createApi({
       }),
     }),
     removeCalendar: builder.mutation({
-      query: ({ user_id, track_id }) => ({
+      query: ({ user_id, entry_date }) => ({
         url: `calendar/remove`,
-        method: "POST",
-        body: { user_id, track_id },
+        method: "DELETE",
+        body: { user_id, entry_date },
       }),
     }),
     getUserTracks: builder.query({

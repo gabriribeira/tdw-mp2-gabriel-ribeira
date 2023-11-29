@@ -6,10 +6,11 @@ import {
   useAddAlbumMutation,
   useAddTrackMutation,
   useAddCalendarMutation,
+  useRemoveCalendarMutation,
 } from "../app/api";
 import { useSelector } from "react-redux";
 
-const AddToModal = ({ item }) => {
+const AddToModal = ({ item, itemDb, calendar }) => {
   const user_id = useSelector((state) => state.auth.user.id);
   const [itemToAdd, setItemToAdd] = useState(null);
   const [itemType, setItemType] = useState(null);
@@ -38,6 +39,9 @@ const AddToModal = ({ item }) => {
   //eslint-disable-next-line
   const [addTrackToCalendar, { isLoading: isAddingTrackToCalendar }] =
     useAddCalendarMutation();
+  //eslint-disable-next-line
+  const [removeTrackFromCalendar, { isLoading: isRemovingTrackFromCalendar }] =
+    useRemoveCalendarMutation();
 
   const handleAddArtist = () => {
     addArtist({ user_id, artist_id: itemToAdd.id });
@@ -63,14 +67,35 @@ const AddToModal = ({ item }) => {
     });
   };
 
+  const handleRemoveTrackCalendar = () => {
+    removeTrackFromCalendar({
+      user_id,
+      entry_date: itemDb.entry_date,
+    });
+  };
+
   return (
-    <div className="z-[101] bg-white absolute xl:top-5 xl:right-3 lg:top-3 lg:right-1 md:top-2 md:right-1 top-0 right-0 w-auto h-auto flex md:p-3 p-2 md:pt-8 pt-6 flex flex-col items-end text-[#2b2b2b] md:text-lg text-md">
-      {(itemType == "track" || itemType == "playlistTrack") && (
+    <div
+      className={
+        calendar
+          ? "z-[101] bg-white absolute top-0 right-0 w-auto h-auto flex md:p-3 p-1 md:pt-8 pt-6 flex flex-col items-end text-[#2b2b2b] md:text-lg text-sm"
+          : "z-[101] bg-white absolute xl:top-5 xl:right-3 lg:top-3 lg:right-1 md:top-2 md:right-1 top-0 right-0 w-auto h-auto flex md:p-3 p-2 md:pt-8 pt-6 flex flex-col items-end text-[#2b2b2b] md:text-lg text-md"
+      }
+    >
+      {(itemType == "track" || itemType == "playlistTrack") && !calendar && (
         <button
           onClick={handleAddTrackToCalendar}
           className="w-full text-end hover:font-bold hover:underline"
         >
           ADD TO CALENDAR
+        </button>
+      )}
+      {calendar && (
+        <button
+          onClick={handleRemoveTrackCalendar}
+          className="w-full text-end hover:font-bold hover:underline"
+        >
+          REMOVE FROM CALENDAR
         </button>
       )}
       <button
@@ -131,6 +156,8 @@ const AddToModal = ({ item }) => {
 
 AddToModal.propTypes = {
   item: PropTypes.object.isRequired,
+  itemDb: PropTypes.object,
+  calendar: PropTypes.bool,
 };
 
 export default AddToModal;

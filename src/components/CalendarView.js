@@ -74,6 +74,7 @@ const CalendarView = ({ entries, currentDate }) => {
   useEffect(() => {
     const generateCalendar = () => {
       let calendarTracksAux = [];
+      let calendarTracksFullAux = [];
 
       if (entries) {
         for (let i = 1; i <= 31; i++) {
@@ -85,8 +86,10 @@ const CalendarView = ({ entries, currentDate }) => {
               ) {
                 if (entry.entry_date.split("/")[0] == i) {
                   calendarTracksAux[i] = entry.track_id;
+                  calendarTracksFullAux[i] = entry;
                 } else {
                   calendarTracksAux[i] = null;
+                  calendarTracksFullAux[i] = null;
                 }
               }
             }
@@ -126,6 +129,7 @@ const CalendarView = ({ entries, currentDate }) => {
             {tracksInMonth[day] && (
               <ItemOverlay
                 item={tracksInMonth[day]}
+                itemDb={calendarTracksFullAux[day]}
                 trackModal={trackModal}
                 setTrackModal={setTrackModal}
                 track={track}
@@ -154,7 +158,7 @@ const CalendarView = ({ entries, currentDate }) => {
 
   return (
     calendar && (
-      <div className="w-full grid lg:grid-cols-8 md:grid-cols-6 grid-cols-4 relative">
+      <div className="w-full grid lg:grid-cols-8 md:grid-cols-6 grid-cols-3 relative">
         {calendar}
         <audio
           ref={audioRef}
