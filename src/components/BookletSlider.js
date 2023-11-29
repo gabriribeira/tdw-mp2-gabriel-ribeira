@@ -1,6 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import DefaultImage from "../assets/default.jpg";
 import useWindowSize from "../hooks/useWindowSize";
 import {
   useGetArtistByIdQuery,
@@ -8,8 +6,7 @@ import {
   useGetTrackByIdQuery,
 } from "../app/spotifyApi";
 import PropTypes from "prop-types";
-import { AiOutlinePause } from "react-icons/ai";
-import { CiPlay1 } from "react-icons/ci";
+import ItemOverlay from "./ItemOverlay";
 
 const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
   const { data: artists } = useGetArtistByIdQuery(artistsb);
@@ -20,6 +17,8 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
   const [track, setTrack] = useState(null);
   const audioRef = useRef(null);
   const { isMobile, isTablet, isDesktop } = useWindowSize();
+  const [trackModal, setTrackModal] = useState(null);
+
   function playTrack(track) {
     if (audioRef.current) {
       setTrack(track);
@@ -64,18 +63,17 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
               <h1 className="-rotate-90">ARTISTS</h1>
             </div>
             {artists &&
-              artists.artists.map((result) => (
-                <Link
-                  key={result.id}
-                  className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex justify-center items-center"
-                  to={`/artist/${result.id}`}
-                >
-                  <img
-                    src={result.images[0] ? result.images[0].url : DefaultImage}
-                    alt={result.name}
-                    className="object-cover absolute w-full h-full top-0 left-0"
-                  />
-                </Link>
+              artists.artists.map((result, index) => (
+                <ItemOverlay
+                  key={index}
+                  item={result}
+                  trackModal={trackModal}
+                  setTrackModal={setTrackModal}
+                  track={track}
+                  playTrack={playTrack}
+                  pauseTrack={pauseTrack}
+                  playing={playing}
+                />
               ))}
           </div>
         </div>
@@ -99,18 +97,17 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
               <h1 className="-rotate-90">ALBUMS</h1>
             </div>
             {albums &&
-              albums.albums.map((result) => (
-                <Link
-                  key={result.id}
-                  className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex justify-center items-center"
-                  to={`/album/${result.id}`}
-                >
-                  <img
-                    src={result.images[0] ? result.images[0].url : DefaultImage}
-                    alt={result.name}
-                    className="object-cover absolute w-full h-full top-0 left-0"
-                  />
-                </Link>
+              albums.albums.map((result, index) => (
+                <ItemOverlay
+                  key={index}
+                  item={result}
+                  trackModal={trackModal}
+                  setTrackModal={setTrackModal}
+                  track={track}
+                  playTrack={playTrack}
+                  pauseTrack={pauseTrack}
+                  playing={playing}
+                />
               ))}
           </div>
         </div>
@@ -134,55 +131,17 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
               <h1 className="-rotate-90">TRACKS</h1>
             </div>
             {tracks &&
-              tracks.tracks.map((result) => (
-                <div
-                  key={result.id}
-                  className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex justify-center items-center group"
-                >
-                  <div className="group-hover:block hidden transition-all duration-[0.2s] absolute hidden w-full h-full p-5 z-[10]">
-                    <Link
-                      className="flex flex-col items-start font-bold text-2xl text-left z-[50]"
-                      to={`/album/${result.album.id}`}
-                    >
-                      <p>{result.name}</p>
-                      <p>{result.artists[0].name}</p>
-                    </Link>
-                    <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
-                      {result.preview_url && (
-                        <button
-                          onClick={() => {
-                            playing && track == result.preview_url
-                              ? pauseTrack()
-                              : playTrack(result.preview_url);
-                          }}
-                          className="text-6xl"
-                        >
-                          {playing && track == result.preview_url ? (
-                            <AiOutlinePause />
-                          ) : (
-                            <CiPlay1 />
-                          )}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  <img
-                    src={
-                      result.album.images[0]
-                        ? result.album.images[0].url
-                        : DefaultImage
-                    }
-                    alt={result.name}
-                    className="object-cover absolute w-full h-full top-0 left-0 group-hover:opacity-50 transition-all duration-[0.2s]"
-                  />
-                  {result.preview_url && track == result.preview_url && (
-                    <img
-                      src={result.album.images[0].url}
-                      alt={result.album.name}
-                      className="absolute top-0 left-0 w-full h-full group-hover:opacity-50 rounded-full animate-spinner transition-all duration-[0.2s]"
-                    />
-                  )}
-                </div>
+              tracks.tracks.map((result, index) => (
+                <ItemOverlay
+                  key={index}
+                  item={result}
+                  trackModal={trackModal}
+                  setTrackModal={setTrackModal}
+                  track={track}
+                  playTrack={playTrack}
+                  pauseTrack={pauseTrack}
+                  playing={playing}
+                />
               ))}
           </div>
         </div>
