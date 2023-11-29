@@ -40,19 +40,27 @@ const AddToModal = ({ item }) => {
     useAddCalendarMutation();
 
   const handleAddArtist = () => {
-    addArtist({ user_id, artist_id: itemToAdd });
+    addArtist({ user_id, artist_id: itemToAdd.id });
   };
 
   const handleAddAlbum = () => {
-    addAlbum({ user_id, album_id: itemToAdd });
+    addAlbum({ user_id, album_id: itemToAdd.id });
   };
 
   const handleAddTrack = () => {
-    addTrack({ user_id, track_id: itemToAdd });
+    addTrack({ user_id, track_id: itemToAdd.id });
   };
 
   const handleAddTrackToCalendar = () => {
-    addTrackToCalendar({ user_id, itemToAdd });
+    const date = new Date();
+    const dateFormatted = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`;
+    addTrackToCalendar({
+      user_id,
+      track_id: itemToAdd.id,
+      date: dateFormatted,
+    });
   };
 
   return (
@@ -67,7 +75,7 @@ const AddToModal = ({ item }) => {
       )}
       <button
         onClick={
-          itemType == "track"
+          itemType == "track" || itemType == "playlistTrack"
             ? handleAddTrack
             : itemType == "album"
               ? handleAddAlbum

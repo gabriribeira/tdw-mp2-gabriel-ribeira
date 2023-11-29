@@ -28,10 +28,10 @@ export const api = createApi({
       query: (user_id) => `calendar/${user_id}`,
     }),
     addCalendar: builder.mutation({
-      query: ({ user_id, track_id }) => ({
+      query: ({ user_id, track_id, date }) => ({
         url: `calendar/add`,
         method: "POST",
-        body: { user_id, track_id },
+        body: { user_id, track_id, date },
       }),
     }),
     removeCalendar: builder.mutation({
