@@ -17,6 +17,7 @@ const ItemOverlay = ({
   pauseTrack,
   playing,
   calendar,
+  booklet,
 }) => {
   const [itemType, setItemType] = useState(null);
   useEffect(() => {
@@ -151,6 +152,7 @@ const ItemOverlay = ({
                 item={itemType == "playlistTrack" ? item.track : item}
                 itemDb={itemDb}
                 calendar={itemType == "calendar" ? true : false}
+                booklet={booklet}
               />
             )}
           <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
@@ -275,6 +277,7 @@ ItemOverlay.propTypes = {
   track: PropTypes.string,
   playing: PropTypes.bool,
   calendar: PropTypes.bool,
+  booklet: PropTypes.bool,
 };
 
 export default ItemOverlay;

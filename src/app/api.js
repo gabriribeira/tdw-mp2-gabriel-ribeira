@@ -60,7 +60,7 @@ export const api = createApi({
     removeArtist: builder.mutation({
       query: ({ user_id, artist_id }) => ({
         url: `artists/remove`,
-        method: "POST",
+        method: "DELETE",
         body: { user_id, artist_id },
       }),
     }),
@@ -74,7 +74,7 @@ export const api = createApi({
     removeAlbum: builder.mutation({
       query: ({ user_id, album_id }) => ({
         url: `albums/remove`,
-        method: "POST",
+        method: "DELETE",
         body: { user_id, album_id },
       }),
     }),
@@ -88,7 +88,7 @@ export const api = createApi({
     removeTrack: builder.mutation({
       query: ({ user_id, track_id }) => ({
         url: `tracks/remove`,
-        method: "POST",
+        method: "DELETE",
         body: { user_id, track_id },
       }),
     }),

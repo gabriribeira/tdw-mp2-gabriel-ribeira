@@ -7,10 +7,13 @@ import {
   useAddTrackMutation,
   useAddCalendarMutation,
   useRemoveCalendarMutation,
+  useRemoveArtistMutation,
+  useRemoveAlbumMutation,
+  useRemoveTrackMutation,
 } from "../app/api";
 import { useSelector } from "react-redux";
 
-const AddToModal = ({ item, itemDb, calendar }) => {
+const AddToModal = ({ item, itemDb, calendar, booklet }) => {
   const user_id = useSelector((state) => state.auth.user.id);
   const [itemToAdd, setItemToAdd] = useState(null);
   const [itemType, setItemType] = useState(null);
@@ -33,9 +36,18 @@ const AddToModal = ({ item, itemDb, calendar }) => {
   //eslint-disable-next-line
   const [addArtist, { isLoading: isAddingArtist }] = useAddArtistMutation();
   //eslint-disable-next-line
+  const [removeArtist, { isLoading: isRemovingArtist }] =
+    useRemoveArtistMutation();
+  //eslint-disable-next-line
   const [addAlbum, { isLoading: isAddingAlbum }] = useAddAlbumMutation();
   //eslint-disable-next-line
+  const [removeAlbum, { isLoading: isRemovingAlbum }] =
+    useRemoveAlbumMutation();
+  //eslint-disable-next-line
   const [addTrack, { isLoading: isAddingTrack }] = useAddTrackMutation();
+  //eslint-disable-next-line
+  const [removeTrack, { isLoading: isRemovingTrack }] =
+    useRemoveTrackMutation();
   //eslint-disable-next-line
   const [addTrackToCalendar, { isLoading: isAddingTrackToCalendar }] =
     useAddCalendarMutation();
@@ -47,12 +59,24 @@ const AddToModal = ({ item, itemDb, calendar }) => {
     addArtist({ user_id, artist_id: itemToAdd.id });
   };
 
+  const handleRemoveArtist = () => {
+    removeArtist({ user_id, artist_id: itemToAdd.id });
+  };
+
   const handleAddAlbum = () => {
     addAlbum({ user_id, album_id: itemToAdd.id });
   };
 
+  const handleRemoveAlbum = () => {
+    removeAlbum({ user_id, album_id: itemToAdd.id });
+  };
+
   const handleAddTrack = () => {
     addTrack({ user_id, track_id: itemToAdd.id });
+  };
+
+  const handleRemoveTrack = () => {
+    removeTrack({ user_id, track_id: itemToAdd.id });
   };
 
   const handleAddTrackToCalendar = () => {
@@ -96,6 +120,20 @@ const AddToModal = ({ item, itemDb, calendar }) => {
           className="w-full text-end hover:font-bold hover:underline"
         >
           REMOVE FROM CALENDAR
+        </button>
+      )}
+      {booklet && (
+        <button
+          onClick={
+            itemType == "track"
+              ? handleRemoveTrack
+              : itemType == "album"
+                ? handleRemoveAlbum
+                : handleRemoveArtist
+          }
+          className="w-full text-end hover:font-bold hover:underline"
+        >
+          REMOVE FROM BOOKLET
         </button>
       )}
       <button
@@ -158,6 +196,7 @@ AddToModal.propTypes = {
   item: PropTypes.object.isRequired,
   itemDb: PropTypes.object,
   calendar: PropTypes.bool,
+  booklet: PropTypes.bool,
 };
 
 export default AddToModal;

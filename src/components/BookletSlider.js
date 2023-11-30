@@ -73,6 +73,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
                   playTrack={playTrack}
                   pauseTrack={pauseTrack}
                   playing={playing}
+                  booklet={true}
                 />
               ))}
           </div>
@@ -107,6 +108,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
                   playTrack={playTrack}
                   pauseTrack={pauseTrack}
                   playing={playing}
+                  booklet={true}
                 />
               ))}
           </div>
@@ -141,6 +143,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
                   playTrack={playTrack}
                   pauseTrack={pauseTrack}
                   playing={playing}
+                  booklet={true}
                 />
               ))}
           </div>
