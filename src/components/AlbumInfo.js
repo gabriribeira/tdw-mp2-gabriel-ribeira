@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import DefaultImage from "../assets/default.jpg";
-import AlbumTracks from "./AlbumTracks";
+import { Link } from "react-router-dom";
 
-const AlbumInfo = ({ albumData }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+const AlbumInfo = ({ albumData, isPlaying }) => {
   return (
     albumData && (
-      <div className="flex w-full">
-        <div className="w-[50vw] h-[50vw] relative">
+      <div className="flex lg:flex-row flex-col w-full">
+        <div className="lg:w-[50vw] lg:h-[50vw] h-[50vh] relative">
           <img
             src={albumData.images[0] ? albumData.images[0].url : DefaultImage}
             alt={albumData.name}
@@ -22,11 +21,16 @@ const AlbumInfo = ({ albumData }) => {
             />
           )}
         </div>
-        <div className="w-[50vw] h-[50vw] bg-[#2b2b2b] flex flex-col justify-between">
-          <h1 className="text-white font-bold text-[9rem] leading-none uppercase pl-10 pt-5">
+        <div className="lg:w-[50vw] lg:h-[50vw] bg-[#2b2b2b] flex flex-col text-white">
+          <h1 className=" font-bold xl:text-[8rem] md:text-[6rem] text-[3rem] leading-none uppercase lg:pl-10 md:pl-5 pl-2 pt-5">
             {albumData.name}
           </h1>
-          <AlbumTracks tracks={albumData} setIsPlaying={setIsPlaying} />
+          <Link
+            to={`/artist/${albumData.artists[0].id}`}
+            className="uppercase md:text-3xl text-xl lg:pl-10 md:pl-5 pl-2"
+          >
+            BY {albumData.artists[0].name}
+          </Link>
         </div>
       </div>
     )
@@ -35,6 +39,7 @@ const AlbumInfo = ({ albumData }) => {
 
 AlbumInfo.propTypes = {
   albumData: PropTypes.object,
+  isPlaying: PropTypes.bool,
 };
 
 export default AlbumInfo;
