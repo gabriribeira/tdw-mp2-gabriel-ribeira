@@ -33,7 +33,7 @@ const ArtistTopTracks = ({ topTracksData, setIsPlaying }) => {
   }
 
   return (
-    <div className="flex flex-col justify-end lg:p-10 p-5 pt-0 max-h-[50%]">
+    <div className="flex flex-col justify-end lg:px-10 lg:pb-5 p-5">
       {topTracksData &&
         topTracksData.tracks.map(
           (result, index) =>
