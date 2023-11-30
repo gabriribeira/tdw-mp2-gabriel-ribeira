@@ -92,6 +92,19 @@ export const api = createApi({
         body: { user_id, track_id },
       }),
     }),
+    getEmmes: builder.query({
+      query: (user_id) => `emmes/${user_id}`,
+    }),
+    sendEmme: builder.mutation({
+      query: ({ sender_id, receiver_id, is_anonymous, message, track_id }) => ({
+        url: `emmes/send`,
+        method: "POST",
+        body: { sender_id, receiver_id, is_anonymous, message, track_id },
+      }),
+    }),
+    searchUsers: builder.query({
+      query: (search) => `users/search/${search}`,
+    }),
   }),
 });
 
@@ -110,4 +123,7 @@ export const {
   useRemoveAlbumMutation,
   useAddTrackMutation,
   useRemoveTrackMutation,
+  useGetEmmesQuery,
+  useSendEmmeMutation,
+  useSearchUsersQuery,
 } = api;

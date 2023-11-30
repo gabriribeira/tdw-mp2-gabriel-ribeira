@@ -18,6 +18,7 @@ const ItemOverlay = ({
   playing,
   calendar,
   booklet,
+  setEmmeModal,
 }) => {
   const [itemType, setItemType] = useState(null);
   useEffect(() => {
@@ -153,6 +154,7 @@ const ItemOverlay = ({
                 itemDb={itemDb}
                 calendar={itemType == "calendar" ? true : false}
                 booklet={booklet}
+                setEmmeModal={setEmmeModal}
               />
             )}
           <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
@@ -278,6 +280,8 @@ ItemOverlay.propTypes = {
   playing: PropTypes.bool,
   calendar: PropTypes.bool,
   booklet: PropTypes.bool,
+  emmeModal: PropTypes.object,
+  setEmmeModal: PropTypes.func,
 };
 
 export default ItemOverlay;

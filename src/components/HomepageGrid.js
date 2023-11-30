@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import ItemOverlay from "./ItemOverlay";
+import EmmeModal from "./EmmeModal";
 
 const HomepageGrid = (props) => {
   const data = props.data;
@@ -9,6 +10,7 @@ const HomepageGrid = (props) => {
   const [track, setTrack] = useState(null);
   const audioRef = useRef(null);
   const [trackModal, setTrackModal] = useState(null);
+  const [emmeModal, setEmmeModal] = useState(null);
 
   function playTrack(track) {
     if (audioRef.current) {
@@ -35,6 +37,7 @@ const HomepageGrid = (props) => {
 
   return (
     <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 relative">
+      {emmeModal && <EmmeModal track={emmeModal} setEmmeModal={setEmmeModal} />}
       {data &&
         data.items.map((item, index) => (
           <ItemOverlay
@@ -46,6 +49,7 @@ const HomepageGrid = (props) => {
             playTrack={playTrack}
             pauseTrack={pauseTrack}
             playing={playing}
+            setEmmeModal={setEmmeModal}
           />
         ))}
       <audio
