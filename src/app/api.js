@@ -24,6 +24,9 @@ export const api = createApi({
         body: data,
       }),
     }),
+    getUserById: builder.query({
+      query: (id) => `users/${id}`,
+    }),
     getCalendar: builder.query({
       query: (user_id) => `calendar/${user_id}`,
     }),
@@ -105,12 +108,20 @@ export const api = createApi({
     searchUsers: builder.query({
       query: (search) => `users/search/${search}`,
     }),
+    emmeFeedback: builder.mutation({
+      query: ({ emme_id, feedback }) => ({
+        url: `emmes/feedback`,
+        method: "PUT",
+        body: { emme_id, feedback },
+      }),
+    }),
   }),
 });
 
 export const {
   useLoginMutation,
   useUpdateUserMutation,
+  useGetUserByIdQuery,
   useGetCalendarQuery,
   useAddCalendarMutation,
   useRemoveCalendarMutation,
@@ -126,4 +137,5 @@ export const {
   useGetEmmesQuery,
   useSendEmmeMutation,
   useSearchUsersQuery,
+  useEmmeFeedbackMutation,
 } = api;

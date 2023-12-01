@@ -19,6 +19,7 @@ const ItemOverlay = ({
   calendar,
   booklet,
   setEmmeModal,
+  meems,
 }) => {
   const [itemType, setItemType] = useState(null);
   useEffect(() => {
@@ -34,6 +35,9 @@ const ItemOverlay = ({
     if (calendar) {
       setItemType("calendar");
     }
+    if (meems) {
+      setItemType("meems");
+    }
   }, [item]);
 
   return (
@@ -45,7 +49,9 @@ const ItemOverlay = ({
             ? "flex flex-col col-span-1 group relative"
             : itemType == "calendar"
               ? "absolute top-0 left-0 w-full group"
-              : "xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex flex-col group"
+              : itemType == "meems"
+                ? "flex flex-col col-span-1 group relative"
+                : "xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex flex-col group"
         }
       >
         <div
@@ -160,6 +166,7 @@ const ItemOverlay = ({
           <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
             {(itemType == "playlistTrack" ||
               itemType == "track" ||
+              itemType == "meems" ||
               itemType == "calendar") &&
               (itemType == "playlistTrack"
                 ? item.track.preview_url
@@ -215,6 +222,13 @@ const ItemOverlay = ({
             className="group-hover:opacity-50 transition-all duration-[0.2s] h-full object-cover w-full"
           />
         )}
+        {itemType == "meems" && (
+          <img
+            src={item.album.images[0] ? item.album.images[0].url : DefaultImage}
+            alt={item.album.name}
+            className="group-hover:opacity-50 transition-all duration-[0.2s] h-full object-cover w-full"
+          />
+        )}
         {itemType == "calendar" && (
           <img
             src={item.album.images[0] ? item.album.images[0].url : DefaultImage}
@@ -255,6 +269,15 @@ const ItemOverlay = ({
               className="absolute top-0 left-0 w-full h-full group-hover:opacity-50 rounded-full animate-spinner transition-all duration-[0.2s]"
             />
           )}
+        {itemType == "meems" &&
+          item.preview_url &&
+          track == item.preview_url && (
+            <img
+              src={item.album.images[0].url}
+              alt={item.album.name}
+              className="absolute top-0 left-0 w-full h-full group-hover:opacity-50 rounded-full animate-spinner transition-all duration-[0.2s]"
+            />
+          )}
         {itemType == "calendar" &&
           item.preview_url &&
           track == item.preview_url && (
@@ -282,6 +305,7 @@ ItemOverlay.propTypes = {
   booklet: PropTypes.bool,
   emmeModal: PropTypes.object,
   setEmmeModal: PropTypes.func,
+  meems: PropTypes.bool,
 };
 
 export default ItemOverlay;
