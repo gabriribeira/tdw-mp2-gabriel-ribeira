@@ -116,6 +116,12 @@ const Navbar = () => {
             >
               PROFILE
             </Link>
+            <Link
+              to={"/about"}
+              className="my-2 hover:font-bold hover:underline"
+            >
+              ABOUT
+            </Link>
           </div>
         </CSSTransition>
       </nav>

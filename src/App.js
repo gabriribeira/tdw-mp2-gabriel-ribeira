@@ -7,6 +7,7 @@ import Album from "./pages/Album";
 import Meems from "./pages/Meems";
 import Profile from "./pages/Profile";
 import User from "./pages/User";
+import About from "./pages/About";
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/meems" element={<Meems />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/user/:id" element={<User />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   );

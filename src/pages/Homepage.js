@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import { useGetPlaylistQuery } from "../app/spotifyApi";
 import Navbar from "../components/Navbar";
 import HomepageGrid from "../components/HomepageGrid";
+import Footer from "../components/Footer";
 
 const Homepage = () => {
+  //eslint-disable-next-line
   const { data: tracks, error, isLoading } = useGetPlaylistQuery();
   useEffect(() => {
     if (tracks) {
@@ -17,7 +19,7 @@ const Homepage = () => {
     <div>
       <Navbar />
       <HomepageGrid data={tracks} />
-      <h2>{isLoading ? "Loading..." : "Tracks"}</h2>
+      <Footer />
     </div>
   );
 };
