@@ -22,7 +22,9 @@ const Calendar = ({ id }) => {
   //eslint-disable-next-line
   const {
     data: calendar,
+    //eslint-disable-next-line
     error,
+    //eslint-disable-next-line
     isLoading,
   } = useGetCalendarQuery(user && user.id);
 
