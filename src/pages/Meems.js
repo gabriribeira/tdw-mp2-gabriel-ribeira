@@ -7,10 +7,10 @@ import MeemsList from "../components/MeemsList";
 
 const Meems = () => {
   const [active, setActive] = useState(0);
-  const [meems, setMeems] = useState(null);
-  const [liked, setLiked] = useState(null);
-  const [disliked, setDisliked] = useState(null);
-  const [activeMeems, setActiveMeems] = useState(null);
+  const [meems, setMeems] = useState();
+  const [liked, setLiked] = useState();
+  const [disliked, setDisliked] = useState();
+  const [activeMeems, setActiveMeems] = useState();
   const user_id = useSelector((state) => state.auth.user.id);
   //eslint-disable-next-line
   const { data, error, isLoading } = useGetEmmesQuery(user_id);
@@ -34,25 +34,21 @@ const Meems = () => {
 
   useEffect(() => {
     if (active == 0) {
-      if (meemsList) {
-        setActiveMeems(meemsList);
-      } else {
-        setActiveMeems(null);
-      }
-    } else if (active == 1) {
-      if (likedList) {
-        setActiveMeems(likedList);
-      } else {
-        setActiveMeems(null);
-      }
-    } else if (active == 2) {
-      if (dislikedList) {
-        setActiveMeems(dislikedList);
-      } else {
-        setActiveMeems(null);
-      }
+      setActiveMeems(meemsList);
+    }
+    if (active == 1) {
+      setActiveMeems(likedList);
+    }
+    if (active == 2) {
+      setActiveMeems(dislikedList);
     }
   }, [active, meemsList, likedList, dislikedList]);
+
+  useEffect(() => {
+    console.log(meems);
+    console.log(liked);
+    console.log(disliked);
+  }, [meems, liked, disliked]);
 
   return (
     <div className="min-h-screen  bg-[#2b2b2b]">
@@ -85,12 +81,42 @@ const Meems = () => {
           </button>
         </div>
       </div>
-      {data && activeMeems && (
-        <MeemsList
-          items={activeMeems}
-          data={active == 0 ? meems : active == 1 ? liked : disliked}
-        />
-      )}
+      {active == 0 &&
+        data != null &&
+        data != [] &&
+        data &&
+        meemsList &&
+        meemsList != null &&
+        meemsList != [] && (
+          <MeemsList
+            items={activeMeems && activeMeems}
+            data={active == 0 ? meems : active == 1 ? liked : disliked}
+          />
+        )}
+      {active == 1 &&
+        data != null &&
+        data != [] &&
+        data &&
+        likedList &&
+        likedList != null &&
+        likedList != [] && (
+          <MeemsList
+            items={activeMeems && activeMeems}
+            data={active == 0 ? meems : active == 1 ? liked : disliked}
+          />
+        )}
+      {active == 2 &&
+        data != null &&
+        data != [] &&
+        data &&
+        dislikedList &&
+        dislikedList != null &&
+        dislikedList != [] && (
+          <MeemsList
+            items={activeMeems && activeMeems}
+            data={active == 0 ? meems : active == 1 ? liked : disliked}
+          />
+        )}
     </div>
   );
 };
