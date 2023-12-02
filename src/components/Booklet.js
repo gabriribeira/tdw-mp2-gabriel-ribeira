@@ -6,19 +6,30 @@ import {
 } from "../app/api";
 import { useSelector } from "react-redux";
 import BookletSlider from "./BookletSlider";
+import PropTypes from "prop-types";
+import { useGetUserByIdQuery } from "../app/api";
 
-const Booklet = () => {
+const Booklet = ({ id }) => {
+  let authUser = useSelector((state) => state.auth.user);
+  const [user, setUser] = useState(null);
+  const { data: visitedUser } = useGetUserByIdQuery(id);
+  useEffect(() => {
+    if (authUser) {
+      setUser(authUser);
+    }
+    if (visitedUser && visitedUser[0]) {
+      setUser(visitedUser[0]);
+    }
+  }, [visitedUser, authUser]);
   const [cleanTracks, setCleanTracks] = useState();
   const [cleanAlbums, setCleanAlbums] = useState();
   const [cleanArtists, setCleanArtists] = useState();
-  const user = useSelector((state) => state.auth.user);
-  const { data: tracks } = useGetUserTracksQuery(user.id);
-  const { data: albums } = useGetUserAlbumsQuery(user.id);
-  const { data: artists } = useGetUserArtistsQuery(user.id);
+  const { data: tracks } = useGetUserTracksQuery(user && user.id);
+  const { data: albums } = useGetUserAlbumsQuery(user && user.id);
+  const { data: artists } = useGetUserArtistsQuery(user && user.id);
 
   useEffect(() => {
     if (tracks) {
-      console.log(tracks);
       let cleanTracksAux = "";
       tracks.map((track, index) => {
         if (index === tracks.length - 1) {
@@ -32,7 +43,6 @@ const Booklet = () => {
   }, [tracks]);
   useEffect(() => {
     if (albums) {
-      console.log(albums);
       let cleanAlbumsAux = "";
       albums.map((album, index) => {
         if (index === albums.length - 1) {
@@ -46,7 +56,6 @@ const Booklet = () => {
   }, [albums]);
   useEffect(() => {
     if (artists) {
-      console.log(artists);
       let cleanArtistsAux = "";
       artists.map((artist, index) => {
         if (index === artists.length - 1) {
@@ -61,7 +70,7 @@ const Booklet = () => {
 
   return (
     <div className="bg-[#2b2b2b] flex flex-col w-full">
-      {cleanArtists && cleanAlbums && cleanTracks && (
+      {(cleanArtists || cleanAlbums || cleanTracks) && (
         <BookletSlider
           tracksb={cleanTracks}
           albumsb={cleanAlbums}
@@ -70,6 +79,10 @@ const Booklet = () => {
       )}
     </div>
   );
+};
+
+Booklet.propTypes = {
+  id: PropTypes.string,
 };
 
 export default Booklet;

@@ -146,7 +146,7 @@ const CalendarView = ({ entries, currentDate }) => {
       setCalendar(calendar);
     };
 
-    if (dateFormatted && calendarTracks) {
+    if (dateFormatted || calendarTracks) {
       generateCalendar();
     }
 
