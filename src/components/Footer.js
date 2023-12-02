@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Link
       to={"/about"}
-      className="fixed bottom-2 left-2 uppercase text-white text-2xl font-bold"
+      className="fixed bottom-2 md:left-2 left-auto md:right-auto right-2 uppercase text-white md:text-2xl text-xl font-bold bg-[#2b2b2b] w-auto"
     >
       ABOUT MEEM
     </Link>

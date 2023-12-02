@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import HomepageGrid from "../components/HomepageGrid";
 import Footer from "../components/Footer";
 import { useSelector } from "react-redux";
+import CheckTopic from "../components/CheckTopic";
 
 const Homepage = () => {
   const authUser = useSelector((state) => state.auth.user.id);
@@ -49,6 +50,13 @@ const Homepage = () => {
       ) : (
         <HomepageGrid data={playlistTracks} playlist={true} />
       )}
+      <CheckTopic
+        topic={
+          searchTodayCalendar && calendarTracks
+            ? `BASED ON TODAY'S MOOD`
+            : `BASED ON COMMUNITY PLAYLIST`
+        }
+      />
       <Footer />
     </div>
   );
