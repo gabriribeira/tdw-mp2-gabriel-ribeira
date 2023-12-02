@@ -1,24 +1,54 @@
-import React, { useEffect } from "react";
-import { useGetPlaylistQuery } from "../app/spotifyApi";
+import React, { useEffect, useState } from "react";
+import {
+  useGetPlaylistQuery,
+  useGetRecommendationsByTrackQuery,
+} from "../app/spotifyApi";
+import { useGetCalendarQuery } from "../app/api";
 import Navbar from "../components/Navbar";
 import HomepageGrid from "../components/HomepageGrid";
 import Footer from "../components/Footer";
+import { useSelector } from "react-redux";
 
 const Homepage = () => {
+  const authUser = useSelector((state) => state.auth.user.id);
   //eslint-disable-next-line
-  const { data: tracks, error, isLoading } = useGetPlaylistQuery();
+  const { data: playlistTracks, error, isLoading } = useGetPlaylistQuery();
+  const { data: calendar } = useGetCalendarQuery(authUser);
+  const date = new Date();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let year = date.getFullYear();
+  const [searchTodayCalendar, setSearchTodayCalendar] = useState(null);
+
+  const {
+    //eslint-disable-next-line
+    data: calendarTracks,
+    //eslint-disable-next-line
+    errorCalendarTracks,
+    //eslint-disable-next-line
+    isLoadingcalendarTracks,
+  } = useGetRecommendationsByTrackQuery(searchTodayCalendar);
+
   useEffect(() => {
-    if (tracks) {
-      console.log(tracks);
+    if (authUser) {
+      if (calendar) {
+        if (
+          calendar[calendar.length - 1].entry_date === `${day}/${month}/${year}`
+        ) {
+          setSearchTodayCalendar(calendar[calendar.length - 1].track_id);
+        }
+      }
     }
-    if (error) {
-      console.error("Error fetching tracks:", error);
-    }
-  }, [tracks, error]);
+  }, [authUser, calendar]);
+
   return (
     <div>
       <Navbar />
-      <HomepageGrid data={tracks} />
+      {searchTodayCalendar && calendarTracks ? (
+        <HomepageGrid data={calendarTracks} playlist={false} />
+      ) : (
+        <HomepageGrid data={playlistTracks} playlist={true} />
+      )}
       <Footer />
     </div>
   );

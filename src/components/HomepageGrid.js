@@ -5,7 +5,9 @@ import EmmeModal from "./EmmeModal";
 
 const HomepageGrid = (props) => {
   const data = props.data;
+  const playlist = props.playlist;
   console.log(data);
+  console.log(playlist);
   const [playing, setPlaying] = useState(false);
   const [track, setTrack] = useState(null);
   const audioRef = useRef(null);
@@ -39,7 +41,23 @@ const HomepageGrid = (props) => {
     <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 relative">
       {emmeModal && <EmmeModal track={emmeModal} setEmmeModal={setEmmeModal} />}
       {data &&
+        playlist == true &&
         data.items.map((item, index) => (
+          <ItemOverlay
+            key={index}
+            item={item}
+            trackModal={trackModal}
+            setTrackModal={setTrackModal}
+            track={track}
+            playTrack={playTrack}
+            pauseTrack={pauseTrack}
+            playing={playing}
+            setEmmeModal={setEmmeModal}
+          />
+        ))}
+      {data &&
+        playlist == false &&
+        data.tracks.map((item, index) => (
           <ItemOverlay
             key={index}
             item={item}
@@ -65,6 +83,7 @@ const HomepageGrid = (props) => {
 
 HomepageGrid.propTypes = {
   data: PropTypes.object,
+  playlist: PropTypes.bool,
 };
 
 export default HomepageGrid;

@@ -84,7 +84,7 @@ const spotifyApi = createApi({
       query: (term) => `search?q=${term}&type=track,artist,album&limit=10`,
     }),
     getRecommendationsByTrack: builder.query({
-      query: (term) => `recommendations?seed_tracks=${term}&limit=20`,
+      query: (term) => `recommendations?seed_tracks=${term}&limit=40`,
     }),
   }),
 });
