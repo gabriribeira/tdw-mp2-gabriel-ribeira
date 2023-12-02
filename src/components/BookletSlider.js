@@ -46,7 +46,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
     <div className="flex flex-col w-full">
       {artists && (
         <div className="overflow-x-scroll">
-          <div className="lg:hidden flex justify-start items-center font-bold text-4xl">
+          <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
             ARTISTS
           </div>
           <div
@@ -81,7 +81,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
       )}
       {albums && (
         <div className="overflow-x-scroll">
-          <div className="lg:hidden flex justify-start items-center font-bold text-4xl">
+          <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
             ALBUMS
           </div>
           <div
@@ -116,7 +116,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
       )}
       {tracks && (
         <div className="overflow-x-scroll">
-          <div className="lg:hidden flex justify-start items-center font-bold text-4xl">
+          <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
             TRACKS
           </div>
           <div
