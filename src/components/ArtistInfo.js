@@ -24,7 +24,7 @@ const ArtistInfo = ({ artistData, topTracksData }) => {
                 artistData.images[0] ? artistData.images[0].url : DefaultImage
               }
               alt={artistData.name}
-              className="absolute w-full object-cover rounded-full h-full top-0 left-0 animate-spinner"
+              className="absolute lg:block hidden w-full object-cover rounded-full h-full top-0 left-0 animate-spinner"
             />
           )}
         </div>

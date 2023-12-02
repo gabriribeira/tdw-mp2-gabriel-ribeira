@@ -17,7 +17,7 @@ const AlbumInfo = ({ albumData, isPlaying }) => {
             <img
               src={albumData.images[0] ? albumData.images[0].url : DefaultImage}
               alt={albumData.name}
-              className="absolute w-full object-cover rounded-full h-full top-0 left-0 animate-spinner"
+              className="absolute lg:block hidden w-full object-cover rounded-full h-full top-0 left-0 animate-spinner"
             />
           )}
         </div>

@@ -1,35 +1,9 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { CiPlay1 } from "react-icons/ci";
 import { AiOutlinePause } from "react-icons/ai";
 import PropTypes from "prop-types";
 
-const AlbumDetails = ({ tracks }) => {
-  const [playing, setPlaying] = useState(false);
-  const [track, setTrack] = useState(null);
-  const audioRef = useRef(null);
-
-  function playTrack(track) {
-    if (audioRef.current) {
-      setTrack(track);
-      setPlaying(true);
-      audioRef.current.pause();
-      audioRef.current.src = track;
-      audioRef.current.load();
-      audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
-        setPlaying(false);
-      });
-    }
-  }
-
-  function pauseTrack() {
-    setPlaying(false);
-    setTrack(null);
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-  }
-
+const AlbumDetails = ({ tracks, isPlaying, playTrack, pauseTrack, track }) => {
   return (
     <div className="flex flex-col justify-end lg:p-10 md:p-5 p-2 bg-[#2b2b2b]">
       {tracks &&
@@ -44,13 +18,13 @@ const AlbumDetails = ({ tracks }) => {
             {result.preview_url && (
               <button
                 onClick={() => {
-                  playing && track == result.preview_url
+                  isPlaying && track == result.preview_url
                     ? pauseTrack()
                     : playTrack(result.preview_url);
                 }}
                 className="text-2xl"
               >
-                {playing && track == result.preview_url ? (
+                {isPlaying && track == result.preview_url ? (
                   <AiOutlinePause />
                 ) : (
                   <CiPlay1 />
@@ -59,19 +33,18 @@ const AlbumDetails = ({ tracks }) => {
             )}
           </div>
         ))}
-      <audio
-        ref={audioRef}
-        onEnded={() => {
-          setPlaying(false);
-          setTrack(null);
-        }}
-      />
     </div>
   );
 };
 
 AlbumDetails.propTypes = {
   tracks: PropTypes.object,
+  isPlaying: PropTypes.bool,
+  setIsPlaying: PropTypes.func,
+  playTrack: PropTypes.func,
+  pauseTrack: PropTypes.func,
+  track: PropTypes.string,
+  setTrack: PropTypes.func,
 };
 
 export default AlbumDetails;

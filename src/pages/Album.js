@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import AlbumInfo from "../components/AlbumInfo";
@@ -7,7 +7,9 @@ import AlbumDetails from "../components/AlbumDetails";
 
 const Album = () => {
   const { id } = useParams();
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [track, setTrack] = useState(null);
+  const audioRef = useRef(null);
 
   //eslint-disable-next-line
   const { data: albumsData, error: artistError } =
@@ -19,14 +21,47 @@ const Album = () => {
       : "MEEM - ALBUM";
   }, [albumsData]);
 
+  function playTrack(track) {
+    if (audioRef.current) {
+      setTrack(track);
+      setPlaying(true);
+      audioRef.current.pause();
+      audioRef.current.src = track;
+      audioRef.current.load();
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+        setPlaying(false);
+      });
+    }
+  }
+
+  function pauseTrack() {
+    setPlaying(false);
+    setTrack(null);
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  }
+
   return (
     <div className="bg-[#2b2b2b] min-h-screen">
       <Navbar />
-      <AlbumInfo albumData={albumsData} isPlaying={isPlaying} />
+      <AlbumInfo albumData={albumsData} isPlaying={playing} />
       <AlbumDetails
         tracks={albumsData}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
+        isPlaying={playing}
+        setIsPlaying={setPlaying}
+        playTrack={playTrack}
+        pauseTrack={pauseTrack}
+        track={track}
+        setTrack={setTrack}
+      />
+      <audio
+        ref={audioRef}
+        onEnded={() => {
+          setPlaying(false);
+          setTrack(null);
+        }}
       />
     </div>
   );
