@@ -1,9 +1,11 @@
-name: Push Pipeline
+name: Pull Request Pipeline
 
 on:
-  push:
+  pull_request:
     branches:
-      - "*"
+      - main
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   Deploy:
@@ -43,3 +45,17 @@ jobs:
       - name: Run ESLint
         run: npm run lint
         if: success()
+
+      - name: Build
+        run: npm run build
+        if: success()
+
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: '/public_html'
+          local-dir: './build'
+          exclude: ".git*, node_modules"
