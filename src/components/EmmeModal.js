@@ -70,8 +70,8 @@ const EmmeModal = ({ track, setEmmeModal }) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-x-2">
                   <img
-                    //eslint-disable-next-line
                     src={
+                      //eslint-disable-next-line
                       process.env.REACT_APP_BACKEND_URL_IMG + receiverId.img_url
                     }
                     className="w-10 h-10 rounded-full object-cover"
@@ -107,8 +107,8 @@ const EmmeModal = ({ track, setEmmeModal }) => {
                         className="flex items-center uppercase p-1 gap-x-2 w-full"
                       >
                         <img
-                          //eslint-disable-next-line
                           src={
+                            //eslint-disable-next-line
                             process.env.REACT_APP_BACKEND_URL_IMG + user.img_url
                           }
                           className="w-10 h-10 rounded-full object-cover"
