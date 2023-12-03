@@ -57,5 +57,5 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: '/public_html'
-          local-dir: './build'
+          local-dir: './build/'
           exclude: ".git*, node_modules"
