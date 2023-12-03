@@ -22,6 +22,7 @@ const ItemOverlay = ({
   setEmmeModal,
   meems,
   setReload,
+  homepage,
 }) => {
   const [itemType, setItemType] = useState(null);
   const [successNotification, setSuccessNotification] = useState(null);
@@ -35,10 +36,13 @@ const ItemOverlay = ({
     } else if (item.type == "artist") {
       setItemType("artist");
     }
+    if (homepage) {
+      setItemType("homepage");
+    }
     if (calendar) {
       setItemType("calendar");
     }
-    if (meems) {
+    if (meems || homepage) {
       setItemType("meems");
     }
   }, [item]);
@@ -332,6 +336,7 @@ ItemOverlay.propTypes = {
   setEmmeModal: PropTypes.func,
   meems: PropTypes.bool,
   setReload: PropTypes.func,
+  homepage: PropTypes.bool,
 };
 
 export default ItemOverlay;

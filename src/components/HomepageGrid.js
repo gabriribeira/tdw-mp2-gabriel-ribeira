@@ -4,6 +4,8 @@ import ItemOverlay from "./ItemOverlay";
 import EmmeModal from "./EmmeModal";
 
 const HomepageGrid = (props) => {
+  console.log(props);
+
   const data = props.data;
   const playlist = props.playlist;
   const [playing, setPlaying] = useState(false);
@@ -51,6 +53,7 @@ const HomepageGrid = (props) => {
             pauseTrack={pauseTrack}
             playing={playing}
             setEmmeModal={setEmmeModal}
+            homepage={true}
           />
         ))}
       {data &&
@@ -66,6 +69,7 @@ const HomepageGrid = (props) => {
             pauseTrack={pauseTrack}
             playing={playing}
             setEmmeModal={setEmmeModal}
+            homepage={true}
           />
         ))}
       <audio
