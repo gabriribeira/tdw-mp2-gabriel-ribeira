@@ -272,8 +272,8 @@ const MeemsList = ({ items, data }) => {
                   >
                     <div className="flex items-center gap-x-2 lg:text-xl md:text-lg text-sm uppercase">
                       <img
-                        //eslint-disable-next-line
                         src={
+                          //eslint-disable-next-line
                           process.env.REACT_APP_BACKEND_URL_IMG +
                           sender[index].img_url
                         }
