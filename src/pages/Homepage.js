@@ -11,7 +11,9 @@ import { useSelector } from "react-redux";
 import CheckTopic from "../components/CheckTopic";
 
 const Homepage = () => {
-  const authUser = useSelector((state) => state.auth.user.id);
+  const authUser = useSelector((state) =>
+    state.auth.user ? state.auth.user.id : null,
+  );
   //eslint-disable-next-line
   const { data: playlistTracks, error, isLoading } = useGetPlaylistQuery();
   const { data: calendar } = useGetCalendarQuery(authUser);
@@ -39,6 +41,8 @@ const Homepage = () => {
           setSearchTodayCalendar(calendar[calendar.length - 1].track_id);
         }
       }
+    } else {
+      setSearchTodayCalendar(null);
     }
   }, [authUser, calendar]);
 
@@ -50,6 +54,7 @@ const Homepage = () => {
       ) : (
         <HomepageGrid data={playlistTracks} playlist={true} />
       )}
+      {!authUser && <HomepageGrid data={playlistTracks} playlist={true} />}
       <CheckTopic
         topic={
           searchTodayCalendar && calendarTracks

@@ -6,8 +6,6 @@ import EmmeModal from "./EmmeModal";
 const HomepageGrid = (props) => {
   const data = props.data;
   const playlist = props.playlist;
-  console.log(data);
-  console.log(playlist);
   const [playing, setPlaying] = useState(false);
   const [track, setTrack] = useState(null);
   const audioRef = useRef(null);

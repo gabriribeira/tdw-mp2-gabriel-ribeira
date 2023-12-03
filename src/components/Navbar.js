@@ -4,11 +4,14 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { CSSTransition } from "react-transition-group";
 import AuthModal from "./AuthModal";
 import { useSelector } from "react-redux";
+import { clearUser } from "../app/authSlice";
+import { useDispatch } from "react-redux";
 
 const Navbar = () => {
   const location = useLocation();
   const [mobileModal, setMobileModal] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     switch (location.pathname) {
       case "/":
@@ -71,7 +74,10 @@ const Navbar = () => {
         {location.pathname === "/profile" && user !== null && (
           <button
             className="md:block hidden"
-            onClick={() => setAuthModalOpen(true)}
+            onClick={() => {
+              dispatch(clearUser());
+              console.log("logout");
+            }}
           >
             {". "}
             LOGOUT
