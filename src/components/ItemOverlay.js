@@ -42,8 +42,11 @@ const ItemOverlay = ({
     if (calendar) {
       setItemType("calendar");
     }
-    if (meems || homepage) {
+    if (meems) {
       setItemType("meems");
+    }
+    if (homepage) {
+      setItemType("homepage");
     }
   }, [item]);
 
@@ -52,7 +55,8 @@ const ItemOverlay = ({
   };
 
   return (
-    itemType && (
+    itemType &&
+    item && (
       <>
         {successNotification && (
           <SuccessNotification
@@ -67,7 +71,7 @@ const ItemOverlay = ({
               ? "flex flex-col col-span-1 group relative"
               : itemType == "calendar"
                 ? "absolute top-0 left-0 w-full group"
-                : itemType == "meems"
+                : itemType == "meems" || itemType == "homepage"
                   ? "flex flex-col col-span-1 group relative"
                   : "xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] relative flex flex-col group"
           }
@@ -92,6 +96,14 @@ const ItemOverlay = ({
                 </Link>
               )}
               {itemType == "track" && (
+                <Link
+                  to={`/album/${item.album.id}`}
+                  className="uppercase font-bold cursor-pointer z-[100]"
+                >
+                  {item.name}
+                </Link>
+              )}
+              {itemType == "homepage" && (
                 <Link
                   to={`/album/${item.album.id}`}
                   className="uppercase font-bold cursor-pointer z-[100]"
@@ -132,6 +144,14 @@ const ItemOverlay = ({
                 </Link>
               )}
               {itemType == "track" && (
+                <Link
+                  to={`/artist/${item.artists[0].id}`}
+                  className="uppercase cursor-pointer z-[100]"
+                >
+                  {item.artists[0].name}
+                </Link>
+              )}
+              {itemType == "homepage" && (
                 <Link
                   to={`/artist/${item.artists[0].id}`}
                   className="uppercase cursor-pointer z-[100]"
@@ -188,6 +208,7 @@ const ItemOverlay = ({
             <div className="absolute w-full h-full flex justify-center items-center top-0 left-0">
               {(itemType == "playlistTrack" ||
                 itemType == "track" ||
+                itemType == "homepage" ||
                 itemType == "meems" ||
                 itemType == "calendar") &&
                 (itemType == "playlistTrack"
@@ -246,6 +267,15 @@ const ItemOverlay = ({
               className="group-hover:opacity-50 transition-all duration-[0.2s] h-full object-cover w-full"
             />
           )}
+          {itemType == "homepage" && (
+            <img
+              src={
+                item.album.images[0] ? item.album.images[0].url : DefaultImage
+              }
+              alt={item.album.name}
+              className="group-hover:opacity-50 transition-all duration-[0.2s] h-full object-cover w-full"
+            />
+          )}
           {itemType == "meems" && (
             <img
               src={
@@ -289,6 +319,15 @@ const ItemOverlay = ({
               />
             )}
           {itemType == "track" &&
+            item.preview_url &&
+            track == item.preview_url && (
+              <img
+                src={item.album.images[0].url}
+                alt={item.album.name}
+                className="absolute top-0 left-0 w-full h-full group-hover:opacity-50 rounded-full animate-spinner transition-all duration-[0.2s]"
+              />
+            )}
+          {itemType == "homepage" &&
             item.preview_url &&
             track == item.preview_url && (
               <img

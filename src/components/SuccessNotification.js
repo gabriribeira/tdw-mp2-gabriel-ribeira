@@ -11,7 +11,7 @@ const SuccessNotification = ({ message, closeSuccessNotification }) => {
     };
   }, []);
   return (
-    <div className="right-0 fixed top-40 w-auto p-5 bg-amarelo text-preto lg:text-xl text-lg z-[99999] rounded-l-full">
+    <div className="right-0 fixed top-40 w-auto p-5 bg-amarelo text-preto lg:text-xl text-lg z-[9999999] rounded-l-full">
       {message}
     </div>
   );

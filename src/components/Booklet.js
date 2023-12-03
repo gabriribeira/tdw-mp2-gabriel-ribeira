@@ -14,7 +14,7 @@ const Booklet = ({ id }) => {
   const [user, setUser] = useState(null);
   const { data: visitedUser } = useGetUserByIdQuery(id);
   //eslint-disable-next-line
-  const [reload, setReload] = useState(false);
+  const [reload, setReload] = useState(true);
   useEffect(() => {
     if (authUser) {
       setUser(authUser);
@@ -28,12 +28,15 @@ const Booklet = ({ id }) => {
   const [cleanArtists, setCleanArtists] = useState();
   const { data: tracks, refetch: refetchTracks } = useGetUserTracksQuery(
     user && user.id,
+    { refetchOnMount: true },
   );
   const { data: albums, refetch: refetchAlbums } = useGetUserAlbumsQuery(
     user && user.id,
+    { refetchOnMount: true },
   );
   const { data: artists, refetch: refetchArtists } = useGetUserArtistsQuery(
     user && user.id,
+    { refetchOnMount: true },
   );
 
   useEffect(() => {

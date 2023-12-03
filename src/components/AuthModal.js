@@ -64,10 +64,12 @@ const AuthModal = ({ closeModal }) => {
         if (res.data) {
           dispatch(setToken(res.data.token));
           dispatch(setUser(res.data.user));
+          closeModal();
+          navigate("/profile");
         }
       });
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("Register failed:", error);
     }
   };
 

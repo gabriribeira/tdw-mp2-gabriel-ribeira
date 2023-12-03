@@ -10,7 +10,7 @@ const Calendar = ({ id }) => {
   let authUser = useSelector((state) => state.auth.user);
   const [user, setUser] = useState(null);
   const { data: visitedUser } = useGetUserByIdQuery(id);
-  const [reload, setReload] = useState(false);
+  const [reload, setReload] = useState(true);
   useEffect(() => {
     if (authUser) {
       setUser(authUser);
@@ -28,7 +28,7 @@ const Calendar = ({ id }) => {
     //eslint-disable-next-line
     isLoading,
     refetch: refetchCalendar,
-  } = useGetCalendarQuery(user && user.id);
+  } = useGetCalendarQuery(user && user.id, { refetchOnMount: true });
 
   const handlePrevMonth = () => {
     setCurrentDate(

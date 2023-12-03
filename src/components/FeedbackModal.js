@@ -7,13 +7,14 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import { useEmmeFeedbackMutation } from "../app/api";
 
-const FeedbackModal = ({ setFeedbackModal, meem }) => {
+const FeedbackModal = ({ setFeedbackModal, meem, setReload }) => {
   const [emmeFeedback] = useEmmeFeedbackMutation();
   const handleFeedback = async (feedback) => {
     await emmeFeedback({
       emme_id: meem,
       feedback: feedback,
     });
+    setReload(true);
     setFeedbackModal();
   };
   return (
@@ -43,6 +44,7 @@ const FeedbackModal = ({ setFeedbackModal, meem }) => {
 FeedbackModal.propTypes = {
   setFeedbackModal: PropTypes.func,
   meem: PropTypes.object,
+  setReload: PropTypes.func,
 };
 
 export default FeedbackModal;

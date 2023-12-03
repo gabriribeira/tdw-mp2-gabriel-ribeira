@@ -152,10 +152,16 @@ const CalendarView = ({ entries, currentDate, setReload }) => {
     }
 
     if (refreshCalendar || trackModal) {
-      setRefreshCalendar(false);
       generateCalendar();
+      setRefreshCalendar(false);
     }
   }, [calendarTracks, dateFormatted, refreshCalendar, trackModal]);
+
+  useEffect(() => {
+    if (refreshCalendar && !trackModal) {
+      setRefreshCalendar(false);
+    }
+  }, [refreshCalendar, trackModal]);
 
   return (
     calendar && (

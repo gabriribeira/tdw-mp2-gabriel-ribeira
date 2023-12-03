@@ -6,7 +6,7 @@ import ItemOverlay from "./ItemOverlay";
 import { GrAddCircle } from "react-icons/gr";
 import FeedbackModal from "./FeedbackModal";
 
-const MeemsList = ({ items, data }) => {
+const MeemsList = ({ items, data, setReload }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -162,6 +162,7 @@ const MeemsList = ({ items, data }) => {
                           <FeedbackModal
                             setFeedbackModal={() => setFeedbackModal(null)}
                             meem={data[index].id}
+                            setReload={setReload}
                           />
                         )}
                       </div>
@@ -250,6 +251,7 @@ const MeemsList = ({ items, data }) => {
                           <FeedbackModal
                             setFeedbackModal={() => setFeedbackModal(null)}
                             meem={data[index].id}
+                            setReload={setReload}
                           />
                         )}
                       </div>
@@ -312,6 +314,7 @@ const MeemsList = ({ items, data }) => {
 MeemsList.propTypes = {
   items: PropTypes.object,
   data: PropTypes.array,
+  setReload: PropTypes.func,
 };
 
 export default MeemsList;

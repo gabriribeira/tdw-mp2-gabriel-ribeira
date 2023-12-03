@@ -106,6 +106,7 @@ const AddToModal = ({
       track_id: itemToAdd.id,
       date: dateFormatted,
     });
+    setSuccessNotification("Track added to Calendar");
   };
 
   const handleRemoveTrackCalendar = () => {
