@@ -42,7 +42,8 @@ const Calendar = ({ id }) => {
     );
   };
   return (
-    user && (
+    user &&
+    user.name && (
       <div className="w-full bg-[#2b2b2b] text-white flex pt-10">
         <div className="w-full flex flex-col">
           <div className="flex items-center justify-center md:text-2xl text-xl font-bold mb-5 md:gap-x-5 gap-x-2">

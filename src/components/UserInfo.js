@@ -2,32 +2,96 @@ import React, { useEffect, useState } from "react";
 import DefaultImage from "../assets/default.jpg";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { useGetUserByIdQuery } from "../app/api";
+import {
+  useGetUserByIdQuery,
+  useUpdateUserDescriptionMutation,
+  useUpdateUserNameMutation,
+  useUpdateProfilePictureMutation,
+} from "../app/api";
 import { MdModeEdit } from "react-icons/md";
 import { IoCheckmarkOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { setUser } from "../app/authSlice";
 
 const UserInfo = ({ id }) => {
   let authUser = useSelector((state) => state.auth.user);
-  const [user, setUser] = useState(null);
+  const [user, setUserState] = useState(null);
   const [isLoggedInUser, setIsLoggedInUser] = useState(null);
   const [editType, setEditType] = useState(null);
   const { data: visitedUser } = useGetUserByIdQuery(id);
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
+  const [updateUserName] = useUpdateUserNameMutation();
+  const [updateUserDescription] = useUpdateUserDescriptionMutation();
+  const dispatch = useDispatch();
+  const [updateProfilePicture] = useUpdateProfilePictureMutation();
+
+  const handleUpload = async (file) => {
+    if (!file || !authUser) {
+      console.error("No file selected");
+      return;
+    }
+
+    try {
+      console.log(authUser.id, file);
+      const result = await updateProfilePicture({
+        user_id: authUser.id,
+        profilePicture: file,
+      });
+
+      dispatch(setUser(result.data[0]));
+      setUserState(result.data[0]);
+      console.log("Profile picture updated successfully", result);
+    } catch (error) {
+      console.error("Error updating profile picture", error);
+    }
+  };
+
   useEffect(() => {
     if (authUser) {
-      setUser(authUser);
+      setUserState(authUser);
       setIsLoggedInUser(true);
     }
     if (visitedUser && visitedUser[0]) {
-      setUser(visitedUser[0]);
+      setUserState(visitedUser[0]);
       setIsLoggedInUser(false);
     }
   }, [visitedUser, authUser]);
+
+  const updateUserNameFunction = async (user_id, name) => {
+    try {
+      const { data } = await updateUserName({ user_id, name });
+      dispatch(setUser(data[0]));
+      setUserState(data[0]);
+      setEditType(null);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateUserDescriptionFunction = async (user_id, description) => {
+    try {
+      const { data } = await updateUserDescription({ user_id, description });
+      dispatch(setUser(data[0]));
+      setUserState(data[0]);
+      setEditType(null);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     user && (
       <div className="flex flex-col w-full h-auto">
         <div className="lg:h-[40vw] w-screen h-[50vh] relative group flex items-center justify-center">
+          <input
+            className="hidden"
+            aria-describedby="file_input_help"
+            id="file_input"
+            type="file"
+            accept="image/*"
+            onChange={(event) => handleUpload(event.target.files[0])}
+          />
           <img
             src={
               user.img_url
@@ -41,12 +105,13 @@ const UserInfo = ({ id }) => {
             }`}
           />
           {isLoggedInUser && (
-            <button
+            <label
+              htmlFor="file_input"
               onClick={() => setEditType("photo")}
-              className="group-hover:block absolute hidden text-[#2b2b2b] text-4xl"
+              className="group-hover:block absolute hidden text-[#2b2b2b] text-4xl cursor-pointer"
             >
               CHANGE PHOTO
-            </button>
+            </label>
           )}
         </div>
 
@@ -75,7 +140,9 @@ const UserInfo = ({ id }) => {
                   placeholder="NAME"
                 />
                 <button
-                  onClick={() => setEditType(null)}
+                  onClick={() => {
+                    updateUserNameFunction(user.id, name);
+                  }}
                   className="absolute right-5 text-white/70 text-4xl hover:text-white"
                 >
                   <IoCheckmarkOutline />
@@ -91,7 +158,9 @@ const UserInfo = ({ id }) => {
           {isLoggedInUser ? (
             editType !== "description" ? (
               <h1 className="group relative flex items-center text-white text-xl w-full leading-none tracking-tight uppercase align-top">
-                {user.description}
+                {user.description
+                  ? user.description
+                  : isLoggedInUser && "ADD A DESCRIPTION"}
                 {isLoggedInUser && (
                   <button
                     onClick={() => setEditType("description")}
@@ -112,7 +181,9 @@ const UserInfo = ({ id }) => {
                   placeholder="DESCRIPTION"
                 />
                 <button
-                  onClick={() => setEditType(null)}
+                  onClick={() => {
+                    updateUserDescriptionFunction(user.id, description);
+                  }}
                   className="absolute right-5 text-white/70 text-4xl hover:text-white"
                 >
                   <IoCheckmarkOutline />

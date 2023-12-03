@@ -17,6 +17,18 @@ export const api = createApi({
         api.setHeader("Authorization", `Bearer ${data.token}`);
       },
     }),
+    register: builder.mutation({
+      query: ({ email, name, username, password }) => ({
+        url: "users/register",
+        method: "POST",
+        body: { email, name, username, password },
+      }),
+      onQuerySuccess: (data) => {
+        const dispatch = useDispatch();
+        dispatch(setToken(data.token));
+        api.setHeader("Authorization", `Bearer ${data.token}`);
+      },
+    }),
     updateUser: builder.mutation({
       query: ({ id, data }) => ({
         url: `user/${id}`,
@@ -115,11 +127,40 @@ export const api = createApi({
         body: { emme_id, feedback },
       }),
     }),
+    updateUserName: builder.mutation({
+      query: ({ user_id, name }) => ({
+        url: `users/name`,
+        method: "PUT",
+        body: { user_id, name },
+      }),
+    }),
+    updateUserDescription: builder.mutation({
+      query: ({ user_id, description }) => ({
+        url: `users/description`,
+        method: "PUT",
+        body: { user_id, description },
+      }),
+    }),
+    updateProfilePicture: builder.mutation({
+      //eslint-disable-next-line
+      query: ({ user_id, profilePicture }) => {
+        const formData = new FormData();
+        formData.append("user_id", user_id);
+        formData.append("profile_picture", profilePicture);
+
+        return {
+          url: `/users/profilePicture`,
+          method: "PUT",
+          body: formData,
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useLoginMutation,
+  useRegisterMutation,
   useUpdateUserMutation,
   useGetUserByIdQuery,
   useGetCalendarQuery,
@@ -138,4 +179,7 @@ export const {
   useSendEmmeMutation,
   useSearchUsersQuery,
   useEmmeFeedbackMutation,
+  useUpdateUserNameMutation,
+  useUpdateUserDescriptionMutation,
+  useUpdateProfilePictureMutation,
 } = api;

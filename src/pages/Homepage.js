@@ -34,7 +34,7 @@ const Homepage = () => {
 
   useEffect(() => {
     if (authUser) {
-      if (calendar) {
+      if (calendar && calendar.length > 0) {
         if (
           calendar[calendar.length - 1].entry_date === `${day}/${month}/${year}`
         ) {
