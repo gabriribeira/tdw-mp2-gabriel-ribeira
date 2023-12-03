@@ -56,6 +56,8 @@ jobs:
         env:
           REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
           REACT_APP_BACKEND_URL_IMG: ${{ secrets.REACT_APP_BACKEND_URL_IMG }}
+          REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+          REACT_APP_CLIENT_SECRET: ${{ secrets.REACT_APP_CLIENT_SECRET }}
         if: success()
 
       - name: Deploy to FTP
