@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useGetTrackByIdQuery } from "../app/spotifyApi";
 import ItemOverlay from "./ItemOverlay";
 
-const CalendarView = ({ entries, currentDate }) => {
+const CalendarView = ({ entries, currentDate, setReload }) => {
   const [dateFormatted, setDateFormatted] = useState(null);
   const [calendar, setCalendar] = useState([]);
   const [allEntries, setAllEntries] = useState([]);
@@ -137,6 +137,7 @@ const CalendarView = ({ entries, currentDate }) => {
                 pauseTrack={pauseTrack}
                 playing={playing}
                 calendar={true}
+                setReload={setReload}
               />
             )}
           </div>,
@@ -175,6 +176,7 @@ const CalendarView = ({ entries, currentDate }) => {
 CalendarView.propTypes = {
   currentDate: PropTypes.object,
   entries: PropTypes.array,
+  setReload: PropTypes.func,
 };
 
 export default CalendarView;

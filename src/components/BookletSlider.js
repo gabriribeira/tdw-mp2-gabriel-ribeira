@@ -8,10 +8,22 @@ import {
 import PropTypes from "prop-types";
 import ItemOverlay from "./ItemOverlay";
 
-const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
-  const { data: artists } = useGetArtistByIdQuery(artistsb);
-  const { data: albums } = useGetAlbumByIdQuery(albumsb);
-  const { data: tracks } = useGetTrackByIdQuery(tracksb);
+const BookletSlider = ({ tracksb, albumsb, artistsb, setReload }) => {
+  const { data: artists } = useGetArtistByIdQuery(artistsb, {
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    refetchOnFocus: true,
+  });
+  const { data: albums } = useGetAlbumByIdQuery(albumsb, {
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    refetchOnFocus: true,
+  });
+  const { data: tracks } = useGetTrackByIdQuery(tracksb, {
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    refetchOnFocus: true,
+  });
 
   const [playing, setPlaying] = useState(false);
   const [track, setTrack] = useState(null);
@@ -74,6 +86,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
                   pauseTrack={pauseTrack}
                   playing={playing}
                   booklet={true}
+                  setReload={setReload}
                 />
               ))}
           </div>
@@ -109,6 +122,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
                   pauseTrack={pauseTrack}
                   playing={playing}
                   booklet={true}
+                  setReload={setReload}
                 />
               ))}
           </div>
@@ -144,6 +158,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
                   pauseTrack={pauseTrack}
                   playing={playing}
                   booklet={true}
+                  setReload={setReload}
                 />
               ))}
           </div>
@@ -164,6 +179,7 @@ BookletSlider.propTypes = {
   tracksb: PropTypes.string.isRequired,
   albumsb: PropTypes.string.isRequired,
   artistsb: PropTypes.string.isRequired,
+  setReload: PropTypes.func.isRequired,
 };
 
 export default BookletSlider;

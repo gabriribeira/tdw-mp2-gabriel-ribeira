@@ -13,7 +13,15 @@ import {
 } from "../app/api";
 import { useSelector } from "react-redux";
 
-const AddToModal = ({ item, itemDb, calendar, booklet, setEmmeModal }) => {
+const AddToModal = ({
+  item,
+  itemDb,
+  calendar,
+  booklet,
+  setEmmeModal,
+  setSuccessNotification,
+  setReload,
+}) => {
   const user_id = useSelector((state) => state.auth.user.id);
   const [itemToAdd, setItemToAdd] = useState(null);
   const [itemType, setItemType] = useState(null);
@@ -55,28 +63,37 @@ const AddToModal = ({ item, itemDb, calendar, booklet, setEmmeModal }) => {
   const [removeTrackFromCalendar, { isLoading: isRemovingTrackFromCalendar }] =
     useRemoveCalendarMutation();
 
-  const handleAddArtist = () => {
-    addArtist({ user_id, artist_id: itemToAdd.id });
+  const handleAddArtist = async () => {
+    await addArtist({ user_id, artist_id: itemToAdd.id });
+    setSuccessNotification("Artist added to booklet");
   };
 
-  const handleRemoveArtist = () => {
-    removeArtist({ user_id, artist_id: itemToAdd.id });
+  const handleRemoveArtist = async () => {
+    await removeArtist({ user_id, artist_id: itemToAdd.id });
+    setReload(true);
+    setSuccessNotification("Artist removed from booklet");
   };
 
-  const handleAddAlbum = () => {
-    addAlbum({ user_id, album_id: itemToAdd.id });
+  const handleAddAlbum = async () => {
+    await addAlbum({ user_id, album_id: itemToAdd.id });
+    setSuccessNotification("Album added to booklet");
   };
 
-  const handleRemoveAlbum = () => {
-    removeAlbum({ user_id, album_id: itemToAdd.id });
+  const handleRemoveAlbum = async () => {
+    await removeAlbum({ user_id, album_id: itemToAdd.id });
+    setReload(true);
+    setSuccessNotification("Album removed from booklet");
   };
 
-  const handleAddTrack = () => {
-    addTrack({ user_id, track_id: itemToAdd.id });
+  const handleAddTrack = async () => {
+    await addTrack({ user_id, track_id: itemToAdd.id });
+    setSuccessNotification("Track added to booklet");
   };
 
-  const handleRemoveTrack = () => {
-    removeTrack({ user_id, track_id: itemToAdd.id });
+  const handleRemoveTrack = async () => {
+    await removeTrack({ user_id, track_id: itemToAdd.id });
+    setReload(true);
+    setSuccessNotification("Track removed from booklet");
   };
 
   const handleAddTrackToCalendar = () => {
@@ -124,7 +141,10 @@ const AddToModal = ({ item, itemDb, calendar, booklet, setEmmeModal }) => {
       )}
       {calendar && (
         <button
-          onClick={handleRemoveTrackCalendar}
+          onClick={() => {
+            handleRemoveTrackCalendar();
+            setReload(true);
+          }}
           className="w-full text-end hover:font-bold hover:underline"
         >
           REMOVE FROM CALENDAR
@@ -206,6 +226,8 @@ AddToModal.propTypes = {
   calendar: PropTypes.bool,
   booklet: PropTypes.bool,
   setEmmeModal: PropTypes.func,
+  setSuccessNotification: PropTypes.func,
+  setReload: PropTypes.func,
 };
 
 export default AddToModal;
