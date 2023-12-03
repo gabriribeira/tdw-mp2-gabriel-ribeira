@@ -52,27 +52,55 @@ const spotifyApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getTracks: builder.query({
-      query: (term) => `search?q=${term}&type=track`,
-    }),
-    getAlbums: builder.query({
-      query: (term) => `search?q=${term}&type=album`,
-    }),
-    getArtist: builder.query({
-      query: (term) => `search?q=${term}&type=artist`,
-    }),
     getPlaylist: builder.query({
       query: () => `playlists/5LjMoUjVPKDZyaSj5ynLWA/tracks`,
     }),
-    // Add more endpoints as needed
+    getTrackByIdSingular: builder.query({
+      query: (term) => `tracks/${term}`,
+    }),
+    getAlbumByIdSingular: builder.query({
+      query: (term) => `albums/${term}`,
+    }),
+    getArtistByIdSingular: builder.query({
+      query: (term) => `artists/${term}`,
+    }),
+    getTrackById: builder.query({
+      query: (term) => `tracks?ids=${term}`,
+    }),
+    getAlbumById: builder.query({
+      query: (term) => `albums?ids=${term}`,
+    }),
+    getArtistById: builder.query({
+      query: (term) => `artists?ids=${term}`,
+    }),
+    getArtistTopTracksById: builder.query({
+      query: (term) => `artists/${term}/top-tracks?market=US`,
+    }),
+    getArtistAlbumsById: builder.query({
+      query: (term) =>
+        `artists/${term}/albums?market=US&include_groups=album,single`,
+    }),
+    getSearch: builder.query({
+      query: (term) => `search?q=${term}&type=track,artist,album&limit=10`,
+    }),
+    getRecommendationsByTrack: builder.query({
+      query: (term) => `recommendations?seed_tracks=${term}&limit=40`,
+    }),
   }),
 });
 
 export const {
-  useGetTracksQuery,
-  useGetAlbumsQuery,
-  useGetArtistQuery,
   useGetPlaylistQuery,
+  useGetTrackByIdSingularQuery,
+  useGetAlbumByIdSingularQuery,
+  useGetArtistByIdSingularQuery,
+  useGetTrackByIdQuery,
+  useGetAlbumByIdQuery,
+  useGetArtistByIdQuery,
+  useGetArtistTopTracksByIdQuery,
+  useGetArtistAlbumsByIdQuery,
+  useGetSearchQuery,
+  useGetRecommendationsByTrackQuery,
 } = spotifyApi;
 
 export default spotifyApi;

@@ -15,3 +15,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.animate-spinner {
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.menu-primary-vertical-enter {
+  position: absolute;
+  transform: translateY(-140%);
+}
+
+.menu-primary-vertical-enter-active {
+  transform: translateY(0%);
+  transition: all 500ms ease;
+}
+
+.menu-primary-vertical-exit {
+  position: absolute;
+}
+
+.menu-primary-vertical-exit-active {
+  transform: translateY(-140%);
+  transition: all 500ms ease;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
