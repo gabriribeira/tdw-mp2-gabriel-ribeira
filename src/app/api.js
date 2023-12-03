@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import { setToken } from "./authSlice";
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/api/" }),
+  //eslint-disable-next-line
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND_URL }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ username, password }) => ({

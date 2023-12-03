@@ -95,7 +95,8 @@ const UserInfo = ({ id }) => {
           <img
             src={
               user.img_url
-                ? "http://localhost:3001" + user.img_url
+                ? //eslint-disable-next-line
+                  process.env.REACT_APP_BACKEND_URL_IMG + user.img_url
                 : DefaultImage
             }
             alt={"Profile Picture"}

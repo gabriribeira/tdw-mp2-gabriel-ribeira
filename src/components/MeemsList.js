@@ -189,7 +189,8 @@ const MeemsList = ({ items, data }) => {
                     <div className="flex items-center gap-x-2 lg:text-xl md:text-lg text-sm uppercase">
                       <img
                         src={
-                          "http://localhost:3001" +
+                          //eslint-disable-next-line
+                          process.env.REACT_APP_BACKEND_URL_IMG +
                           sender.filter(
                             (item) => item.id == data[index].sender_id,
                           )[0].img_url
@@ -271,7 +272,11 @@ const MeemsList = ({ items, data }) => {
                   >
                     <div className="flex items-center gap-x-2 lg:text-xl md:text-lg text-sm uppercase">
                       <img
-                        src={"http://localhost:3001" + sender[index].img_url}
+                        //eslint-disable-next-line
+                        src={
+                          process.env.REACT_APP_BACKEND_URL_IMG +
+                          sender[index].img_url
+                        }
                         alt={sender[index].username}
                         className="md:w-7 md:h-7 w-5 h-5 rounded-full object-cover"
                       />
