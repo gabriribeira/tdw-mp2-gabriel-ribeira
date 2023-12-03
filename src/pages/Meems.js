@@ -51,13 +51,13 @@ const Meems = () => {
   }, [meems, liked, disliked]);
 
   return (
-    <div className="min-h-screen  bg-[#2b2b2b]">
+    <div className="min-h-screen  bg-preto">
       <Navbar />
       <div className="relative flex sticky xl:top-[10vh] lg:top-[7vh] md:top-[5vh] z-[90] overflow-hidden h-full">
-        <div className="w-full border-b-2 border-b-[#2b2b2b] bg-white text-lg focus:outline-none text-[#2b2b2b] pt-10 md:grid md:grid-cols-3 flex overflow-x-scroll justify-around items-center">
+        <div className="w-full border-b-2 border-b-preto bg-white text-lg focus:outline-none text-[preto pt-10 md:grid md:grid-cols-3 flex overflow-x-scroll justify-around items-center">
           <button
             className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
-              active == 0 && "bg-[#2b2b2b] text-white"
+              active == 0 && "bg-preto text-white"
             } `}
             onClick={() => setActive(0)}
           >
@@ -65,7 +65,7 @@ const Meems = () => {
           </button>
           <button
             className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
-              active == 1 && "bg-[#2b2b2b] text-white"
+              active == 1 && "bg-preto text-white"
             }`}
             onClick={() => setActive(1)}
           >
@@ -73,7 +73,7 @@ const Meems = () => {
           </button>
           <button
             className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
-              active == 2 && "bg-[#2b2b2b] text-white"
+              active == 2 && "bg-preto text-white"
             }`}
             onClick={() => setActive(2)}
           >

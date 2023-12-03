@@ -116,7 +116,7 @@ const MeemsList = ({ items, data }) => {
     items.tracks != "[null, null, null, null]" &&
     data != null &&
     items != [] && (
-      <div className="flex flex-col bg-[#2b2b2b] h-full">
+      <div className="flex flex-col bg-preto h-full">
         <div className="pt-10 w-full">
           <input
             type="text"

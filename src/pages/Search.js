@@ -22,7 +22,7 @@ const Search = () => {
       <div className="relative flex sticky xl:top-[10vh] lg:top-[7vh] md:top-[5vh] top-[4vh] z-[90] overflow-hidden">
         <input
           type="text"
-          className="w-full border-b-2 border-b-[#2b2b2b] bg-white text-lg focus:outline-none mt-5 md:px-20 pl-10 text-[#2b2b2b] placeholder:text-[#2b2b2b]/50 pt-5"
+          className="w-full border-b-2 border-b-preto bg-white text-lg focus:outline-none mt-5 md:px-20 pl-10 text-preto placeholder:text-preto/50 pt-5"
           placeholder="SEARCH FOR ARTIST, ALBUM, TRACK, USER..."
           onChange={(e) => setSearch(e.target.value)}
           value={search}

@@ -69,7 +69,7 @@ const Booklet = ({ id }) => {
   }, [artists]);
 
   return (
-    <div className="bg-[#2b2b2b] flex flex-col w-full">
+    <div className="bg-preto flex flex-col w-full">
       {(cleanArtists || cleanAlbums || cleanTracks) && (
         <BookletSlider
           tracksb={cleanTracks}

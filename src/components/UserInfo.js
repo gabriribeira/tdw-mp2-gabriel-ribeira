@@ -109,14 +109,14 @@ const UserInfo = ({ id }) => {
             <label
               htmlFor="file_input"
               onClick={() => setEditType("photo")}
-              className="group-hover:block absolute hidden text-[#2b2b2b] text-4xl cursor-pointer"
+              className="group-hover:block absolute hidden text-preto text-4xl cursor-pointer"
             >
               CHANGE PHOTO
             </label>
           )}
         </div>
 
-        <div className="w-screen h-full bg-[#2b2b2b] flex flex-col pb-10">
+        <div className="w-screen h-full bg-preto flex flex-col pb-10">
           {isLoggedInUser ? (
             editType !== "name" ? (
               <h1 className="group relative flex items-center text-white font-bold lg:text-[8rem] text-[5rem] w-full leading-none tracking-tight uppercase align-top">

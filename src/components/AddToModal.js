@@ -102,8 +102,8 @@ const AddToModal = ({ item, itemDb, calendar, booklet, setEmmeModal }) => {
     <div
       className={
         calendar
-          ? "z-[101] bg-white absolute bottom-0 right-0 w-auto h-auto flex md:p-3 p-1 md:pt-8 pt-6 flex flex-col items-end text-[#2b2b2b] md:text-lg text-sm w-[150%] z-[104]"
-          : "z-[101] bg-white absolute xl:top-5 xl:right-3 lg:top-3 lg:right-1 md:top-2 md:right-1 top-0 right-0 w-auto h-auto flex md:p-3 p-2 md:pt-8 pt-6 flex flex-col items-end text-[#2b2b2b] md:text-lg text-md"
+          ? "z-[101] bg-white absolute bottom-0 right-0 w-auto h-auto flex md:p-3 p-1 md:pt-8 pt-6 flex flex-col items-end text-preto md:text-lg text-sm w-[150%] z-[104]"
+          : "z-[101] bg-white absolute xl:top-5 xl:right-3 lg:top-3 lg:right-1 md:top-2 md:right-1 top-0 right-0 w-auto h-auto flex md:p-3 p-2 md:pt-8 pt-6 flex flex-col items-end text-preto md:text-lg text-md"
       }
     >
       {(itemType == "track" || itemType == "playlistTrack") && (

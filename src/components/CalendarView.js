@@ -115,10 +115,10 @@ const CalendarView = ({ entries, currentDate }) => {
         calendar.push(
           <div
             key={day}
-            className="col-span-1 w-full pb-[100%] relative flex justify-center items-center text-[#2b2b2b]"
+            className="col-span-1 w-full pb-[100%] relative flex justify-center items-center text-preto"
           >
             {tracksInMonth[day] ? (
-              <h1 className="absolute top-1 left-1 text-xl font-bold text-[#2b2b2b] z-[100]">
+              <h1 className="absolute top-1 left-1 text-xl font-bold text-preto z-[100]">
                 {day}
               </h1>
             ) : (

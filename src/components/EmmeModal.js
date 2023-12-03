@@ -48,8 +48,8 @@ const EmmeModal = ({ track, setEmmeModal }) => {
   };
   return (
     track && (
-      <div className="fixed top-0 left-0 w-full h-full bg-[#2b2b2b]/50 flex justify-center items-center z-[99999]">
-        <div className="xl:w-[50vw] lg:w-[60vw] md:w-[80vw] w-[90vw] rounded-lg bg-[#2b2b2b] overflow-y-auto absolute flex flex-col lg:p-5 xl:pt-20 lg:pt-14 md:pt-20 pt-20 p-5 md:grid md:grid-cols-2 gap-x-10">
+      <div className="fixed top-0 left-0 w-full h-full bg-preto/50 flex justify-center items-center z-[99999]">
+        <div className="xl:w-[50vw] lg:w-[60vw] md:w-[80vw] w-[90vw] rounded-lg bg-preto overflow-y-auto absolute flex flex-col lg:p-5 xl:pt-20 lg:pt-14 md:pt-20 pt-20 p-5 md:grid md:grid-cols-2 gap-x-10">
           <h1 className="absolute left-3 top-3 text-2xl text-white uppercase font-bold">
             SEND {track.name}
           </h1>
@@ -96,7 +96,7 @@ const EmmeModal = ({ track, setEmmeModal }) => {
                   placeholder="SEARCH FOR USERS"
                   className="bg-transparent w-full border-b-2 border-white text-white focus:outline-none text-xl"
                 />
-                <div className="absolute w-full top-[100%] left-0 bg-white text-[#2b2b2b] rounded-b-lg ">
+                <div className="absolute w-full top-[100%] left-0 bg-white text-preto rounded-b-lg ">
                   {usersList &&
                     usersList.length > 0 &&
                     usersList.map((user, index) => (
@@ -133,7 +133,7 @@ const EmmeModal = ({ track, setEmmeModal }) => {
                   className={
                     isAnonymous
                       ? "w-5 h-5 bg-white border-2 border-white rounded-full"
-                      : "w-5 h-5 bg-[#2b2b2b] border-2 border-white rounded-full"
+                      : "w-5 h-5 bg-preto border-2 border-white rounded-full"
                   }
                 ></button>
                 <p className="text-white text-xl">

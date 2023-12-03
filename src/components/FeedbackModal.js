@@ -17,22 +17,22 @@ const FeedbackModal = ({ setFeedbackModal, meem }) => {
     setFeedbackModal();
   };
   return (
-    <div className="bg-white rounded-xl absolute bottom-[100%] p-5 flex items-end gap-x-5 text-[#2b2b2b] text-3xl z-[103] h-[100px]">
+    <div className="bg-white rounded-xl absolute bottom-[100%] p-5 flex items-end gap-x-5 text-preto text-3xl z-[103] h-[100px]">
       <button
         onClick={() => setFeedbackModal()}
-        className="absolute right-2 top-2 text-3xl text-[#2b2b2b] z-[104]"
+        className="absolute right-2 top-2 text-3xl text-preto z-[104]"
       >
         <RxCross2 />
       </button>
       <button
         onClick={() => handleFeedback(false)}
-        className="hover:text-[#2b2b2b]/50"
+        className="hover:text-preto/50"
       >
         <BsFillHandThumbsDownFill />
       </button>
       <button
         onClick={() => handleFeedback(true)}
-        className="hover:text-[#2b2b2b]/50"
+        className="hover:text-preto/50"
       >
         <BsFillHandThumbsUpFill />
       </button>

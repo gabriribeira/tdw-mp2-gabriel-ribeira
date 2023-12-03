@@ -59,7 +59,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
               }vw`,
             }}
           >
-            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-[#2b2b2b]">
+            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
               <h1 className="-rotate-90">ARTISTS</h1>
             </div>
             {artists &&
@@ -94,7 +94,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
               }vw`,
             }}
           >
-            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-[#2b2b2b]">
+            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
               <h1 className="-rotate-90">ALBUMS</h1>
             </div>
             {albums &&
@@ -129,7 +129,7 @@ const BookletSlider = ({ tracksb, albumsb, artistsb }) => {
               }vw`,
             }}
           >
-            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-[#2b2b2b]">
+            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
               <h1 className="-rotate-90">TRACKS</h1>
             </div>
             {tracks &&

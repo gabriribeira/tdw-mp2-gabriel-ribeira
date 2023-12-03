@@ -21,7 +21,7 @@ const AlbumInfo = ({ albumData, isPlaying }) => {
             />
           )}
         </div>
-        <div className="lg:w-[50vw] lg:h-[50vw] bg-[#2b2b2b] flex flex-col text-white">
+        <div className="lg:w-[50vw] lg:h-[50vw] bg-preto flex flex-col text-white">
           <h1 className=" font-bold xl:text-[8rem] md:text-[6rem] text-[3rem] leading-none uppercase lg:pl-10 md:pl-5 pl-2 pt-5 w-full">
             {albumData.name}
           </h1>

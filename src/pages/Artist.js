@@ -29,7 +29,7 @@ const Artist = () => {
   }, [artistData]);
 
   return (
-    <div className="bg-[#2b2b2b] min-h-screen">
+    <div className="bg-[preto min-h-screen">
       <Navbar />
       <ArtistInfo artistData={artistData} topTracksData={topTracksData} />
       <ArtistAlbums albumsData={albumsData} topTracksData={topTracksData} />
