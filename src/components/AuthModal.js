@@ -5,6 +5,7 @@ import { BsEyeFill, BsEyeSlash } from "react-icons/bs";
 import { useLoginMutation, useRegisterMutation } from "../app/api";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../app/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const AuthModal = ({ closeModal }) => {
   const [authType, setAuthType] = useState(true);
@@ -23,6 +24,7 @@ const AuthModal = ({ closeModal }) => {
   const [registerUser, { isLoadingRegister, isErrorRegister }] =
     useRegisterMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,6 +38,8 @@ const AuthModal = ({ closeModal }) => {
         if (res.data) {
           dispatch(setToken(res.data.token));
           dispatch(setUser(res.data.user));
+          closeModal();
+          navigate("/profile");
         }
       });
     } catch (error) {

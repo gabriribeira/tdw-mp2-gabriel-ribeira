@@ -6,12 +6,14 @@ import AuthModal from "./AuthModal";
 import { useSelector } from "react-redux";
 import { clearUser } from "../app/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation();
   const [mobileModal, setMobileModal] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     switch (location.pathname) {
       case "/":
@@ -76,7 +78,7 @@ const Navbar = () => {
             className="md:block hidden"
             onClick={() => {
               dispatch(clearUser());
-              console.log("logout");
+              navigate("/");
             }}
           >
             {". "}
