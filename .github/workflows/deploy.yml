@@ -19,6 +19,11 @@ jobs:
           echo "${{ secrets.ENV_FILE }}" > .env
         if: success()
 
+      - name: Set Environment Variables
+        run: |
+          export $(grep -v '^#' .env | xargs)
+        if: success()
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
