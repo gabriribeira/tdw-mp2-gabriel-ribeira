@@ -200,11 +200,19 @@ const MeemsList = ({ items, data, setReload }) => {
                         src={
                           //eslint-disable-next-line
                           process.env.REACT_APP_BACKEND_URL_IMG +
-                          sender.filter(
-                            (item) => item.id == data[index].sender_id,
-                          )[0].img_url
+                          (sender &&
+                            sender.filter(
+                              (item) => item.id == data[index].sender_id,
+                            )[0].img_url &&
+                            sender.filter(
+                              (item) => item.id == data[index].sender_id,
+                            )[0].img_url)
                         }
                         alt={
+                          sender &&
+                          sender.filter(
+                            (item) => item.id == data[index].sender_id,
+                          )[0].username &&
                           sender.filter(
                             (item) => item.id == data[index].sender_id,
                           )[0].username
