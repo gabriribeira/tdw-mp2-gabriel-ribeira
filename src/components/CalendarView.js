@@ -147,12 +147,42 @@ const CalendarView = ({ entries, currentDate, setReload }) => {
       setCalendar(calendar);
     };
 
-    if (dateFormatted || calendarTracks) {
+    const generateCalendarWithoutTracks = () => {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const daysInMonth = getDaysInMonth(year, month);
+      const calendar = [];
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        calendar.push(
+          <div
+            key={day}
+            className="col-span-1 w-full pb-[100%] relative flex justify-center items-center text-preto"
+          >
+            <h1 className="absolute top-1 left-1 text-xl text-white font-bold">
+              {day}
+            </h1>
+          </div>,
+        );
+      }
+
+      setCalendar(calendar);
+    };
+
+    if (dateFormatted && calendarTracks) {
       generateCalendar();
+    } else if (dateFormatted && !calendarTracks) {
+      generateCalendarWithoutTracks();
     }
 
-    if (refreshCalendar || trackModal) {
+    if ((refreshCalendar && calendarTracks) || (trackModal && calendarTracks)) {
       generateCalendar();
+      setRefreshCalendar(false);
+    } else if (
+      (refreshCalendar && !calendarTracks) ||
+      (trackModal && !calendarTracks)
+    ) {
+      generateCalendarWithoutTracks();
       setRefreshCalendar(false);
     }
   }, [calendarTracks, dateFormatted, refreshCalendar, trackModal]);
