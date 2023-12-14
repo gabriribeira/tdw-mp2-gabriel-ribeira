@@ -97,9 +97,13 @@ const MeemsList = ({ items, data, setReload }) => {
   };
 
   return (
-    sender &&
-    sender != null &&
     //Aqui passei-me um bocado
+    sender &&
+    sender != undefined &&
+    sender != "undefined" &&
+    sender != "" &&
+    sender != [] &&
+    sender != null &&
     items != null &&
     items.tracks != null &&
     items.tracks != [] &&
@@ -181,6 +185,10 @@ const MeemsList = ({ items, data, setReload }) => {
                   </div>
                   <Link
                     to={`/users/${
+                      sender &&
+                      sender.filter(
+                        (item) => item.id == data[index].sender_id,
+                      )[0].id &&
                       sender.filter(
                         (item) => item.id == data[index].sender_id,
                       )[0].id
