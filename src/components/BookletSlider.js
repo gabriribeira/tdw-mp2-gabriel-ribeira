@@ -55,130 +55,132 @@ const BookletSlider = ({ tracksb, albumsb, artistsb, setReload }) => {
   }
 
   return (
-    <div className="flex flex-col w-full">
-      {artists && (
-        <div className="overflow-x-scroll">
-          <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
-            ARTISTS
-          </div>
-          <div
-            className={`flex`}
-            style={{
-              width: `${
-                artists.artists.length *
-                  (isMobile ? 50 : isTablet ? 35 : isDesktop ? 20 : 15) +
-                (isMobile ? 0 : isTablet ? 0 : isDesktop ? 20 : 15)
-              }vw`,
-            }}
-          >
-            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
-              <h1 className="-rotate-90">ARTISTS</h1>
+    (tracksb || albumsb || artistsb) && (
+      <div className="flex flex-col w-full">
+        {artists && artistsb && (
+          <div className="overflow-x-scroll">
+            <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
+              ARTISTS
             </div>
-            {artists &&
-              artists.artists.map((result, index) => (
-                <ItemOverlay
-                  key={index}
-                  item={result}
-                  trackModal={trackModal}
-                  setTrackModal={setTrackModal}
-                  track={track}
-                  playTrack={playTrack}
-                  pauseTrack={pauseTrack}
-                  playing={playing}
-                  booklet={true}
-                  setReload={setReload}
-                />
-              ))}
-          </div>
-        </div>
-      )}
-      {albums && (
-        <div className="overflow-x-scroll">
-          <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
-            ALBUMS
-          </div>
-          <div
-            className={`flex`}
-            style={{
-              width: `${
-                albums.albums.length *
-                  (isMobile ? 50 : isTablet ? 35 : isDesktop ? 20 : 15) +
-                (isMobile ? 0 : isTablet ? 0 : isDesktop ? 20 : 15)
-              }vw`,
-            }}
-          >
-            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
-              <h1 className="-rotate-90">ALBUMS</h1>
+            <div
+              className={`flex`}
+              style={{
+                width: `${
+                  artists.artists.length *
+                    (isMobile ? 50 : isTablet ? 35 : isDesktop ? 20 : 15) +
+                  (isMobile ? 0 : isTablet ? 0 : isDesktop ? 20 : 15)
+                }vw`,
+              }}
+            >
+              <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
+                <h1 className="-rotate-90">ARTISTS</h1>
+              </div>
+              {artists &&
+                artists.artists.map((result, index) => (
+                  <ItemOverlay
+                    key={index}
+                    item={result}
+                    trackModal={trackModal}
+                    setTrackModal={setTrackModal}
+                    track={track}
+                    playTrack={playTrack}
+                    pauseTrack={pauseTrack}
+                    playing={playing}
+                    booklet={true}
+                    setReload={setReload}
+                  />
+                ))}
             </div>
-            {albums &&
-              albums.albums.map((result, index) => (
-                <ItemOverlay
-                  key={index}
-                  item={result}
-                  trackModal={trackModal}
-                  setTrackModal={setTrackModal}
-                  track={track}
-                  playTrack={playTrack}
-                  pauseTrack={pauseTrack}
-                  playing={playing}
-                  booklet={true}
-                  setReload={setReload}
-                />
-              ))}
           </div>
-        </div>
-      )}
-      {tracks && (
-        <div className="overflow-x-scroll">
-          <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
-            TRACKS
-          </div>
-          <div
-            className={`flex`}
-            style={{
-              width: `${
-                tracks.tracks.length *
-                  (isMobile ? 50 : isTablet ? 35 : isDesktop ? 20 : 15) +
-                (isMobile ? 0 : isTablet ? 0 : isDesktop ? 20 : 15)
-              }vw`,
-            }}
-          >
-            <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
-              <h1 className="-rotate-90">TRACKS</h1>
+        )}
+        {albums && albumsb && (
+          <div className="overflow-x-scroll">
+            <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
+              ALBUMS
             </div>
-            {tracks &&
-              tracks.tracks.map((result, index) => (
-                <ItemOverlay
-                  key={index}
-                  item={result}
-                  trackModal={trackModal}
-                  setTrackModal={setTrackModal}
-                  track={track}
-                  playTrack={playTrack}
-                  pauseTrack={pauseTrack}
-                  playing={playing}
-                  booklet={true}
-                  setReload={setReload}
-                />
-              ))}
+            <div
+              className={`flex`}
+              style={{
+                width: `${
+                  albums.albums.length *
+                    (isMobile ? 50 : isTablet ? 35 : isDesktop ? 20 : 15) +
+                  (isMobile ? 0 : isTablet ? 0 : isDesktop ? 20 : 15)
+                }vw`,
+              }}
+            >
+              <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
+                <h1 className="-rotate-90">ALBUMS</h1>
+              </div>
+              {albums &&
+                albums.albums.map((result, index) => (
+                  <ItemOverlay
+                    key={index}
+                    item={result}
+                    trackModal={trackModal}
+                    setTrackModal={setTrackModal}
+                    track={track}
+                    playTrack={playTrack}
+                    pauseTrack={pauseTrack}
+                    playing={playing}
+                    booklet={true}
+                    setReload={setReload}
+                  />
+                ))}
+            </div>
           </div>
-        </div>
-      )}
-      <audio
-        ref={audioRef}
-        controls={false}
-        type="audio/mpeg"
-        className=""
-        onEnded={pauseTrack}
-      ></audio>
-    </div>
+        )}
+        {tracks && tracksb && (
+          <div className="overflow-x-scroll">
+            <div className="lg:hidden flex justify-start items-center font-bold text-4xl bg-white">
+              TRACKS
+            </div>
+            <div
+              className={`flex`}
+              style={{
+                width: `${
+                  tracks.tracks.length *
+                    (isMobile ? 50 : isTablet ? 35 : isDesktop ? 20 : 15) +
+                  (isMobile ? 0 : isTablet ? 0 : isDesktop ? 20 : 15)
+                }vw`,
+              }}
+            >
+              <div className="xl:w-[15vw] xl:h-[15vw] lg:w-[20vw] lg:h-[20vw] md:w-[35vw] md:h-[35vw] w-[50vw] h-[50vw] hidden bg-white relative lg:flex justify-center items-center text-4xl font-bold border-b-2 border-preto">
+                <h1 className="-rotate-90">TRACKS</h1>
+              </div>
+              {tracks &&
+                tracks.tracks.map((result, index) => (
+                  <ItemOverlay
+                    key={index}
+                    item={result}
+                    trackModal={trackModal}
+                    setTrackModal={setTrackModal}
+                    track={track}
+                    playTrack={playTrack}
+                    pauseTrack={pauseTrack}
+                    playing={playing}
+                    booklet={true}
+                    setReload={setReload}
+                  />
+                ))}
+            </div>
+          </div>
+        )}
+        <audio
+          ref={audioRef}
+          controls={false}
+          type="audio/mpeg"
+          className=""
+          onEnded={pauseTrack}
+        ></audio>
+      </div>
+    )
   );
 };
 
 BookletSlider.propTypes = {
-  tracksb: PropTypes.string.isRequired,
-  albumsb: PropTypes.string.isRequired,
-  artistsb: PropTypes.string.isRequired,
+  tracksb: PropTypes.string,
+  albumsb: PropTypes.string,
+  artistsb: PropTypes.string,
   setReload: PropTypes.func.isRequired,
 };
 

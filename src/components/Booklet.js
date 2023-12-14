@@ -104,7 +104,7 @@ const Booklet = ({ id }) => {
 
   return (
     <div className="bg-preto flex flex-col w-full">
-      {(cleanArtists || cleanAlbums || cleanTracks) && !reload && (
+      {(cleanArtists || cleanAlbums || cleanTracks) && !reload && user && (
         <BookletSlider
           tracksb={cleanTracks}
           albumsb={cleanAlbums}
