@@ -70,7 +70,7 @@ const Calendar = ({ id }) => {
               <SlArrowRight />
             </button>
           </div>
-          {user && !reload && (
+          {user && calendar && !reload && (
             <CalendarView
               entries={calendar}
               currentDate={currentDate}
