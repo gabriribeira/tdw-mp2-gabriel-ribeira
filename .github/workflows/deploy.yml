@@ -1,0 +1,71 @@
+name: Pull Request Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Create Env"
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+        if: success()
+
+      - name: Set Environment Variables
+        run: |
+          export $(grep -v '^#' .env | xargs)
+        if: success()
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: v18.18.1
+        if: success()
+
+      - name: Get node_modules cache
+        uses: actions/cache@v3
+        id: node_modules
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}-${{ steps.node.outputs.version }}
+        if: success()
+
+      - name: Install Dependencies
+        run: npm install
+        if: success()
+
+      - name: Run Prettier
+        run: npm run format
+        if: success()
+
+      - name: Run ESLint
+        run: npm run lint
+        if: success()
+
+      - name: Build
+        run: npm run build
+        env:
+          REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
+          REACT_APP_BACKEND_URL_IMG: ${{ secrets.REACT_APP_BACKEND_URL_IMG }}
+          REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+          REACT_APP_CLIENT_SECRET: ${{ secrets.REACT_APP_CLIENT_SECRET }}
+        if: success()
+
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: "/public_html/"
+          local-dir: "./build/"
+          exclude: ".git*, node_modules"

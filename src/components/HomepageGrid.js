@@ -2,8 +2,11 @@ import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import ItemOverlay from "./ItemOverlay";
 import EmmeModal from "./EmmeModal";
+import SuccessNotification from "./SuccessNotification";
 
 const HomepageGrid = (props) => {
+  console.log(props);
+
   const data = props.data;
   const playlist = props.playlist;
   const [playing, setPlaying] = useState(false);
@@ -11,6 +14,7 @@ const HomepageGrid = (props) => {
   const audioRef = useRef(null);
   const [trackModal, setTrackModal] = useState(null);
   const [emmeModal, setEmmeModal] = useState(null);
+  const [successNotification, setSuccessNotification] = useState(null);
 
   function playTrack(track) {
     if (audioRef.current) {
@@ -37,7 +41,19 @@ const HomepageGrid = (props) => {
 
   return (
     <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 relative">
-      {emmeModal && <EmmeModal track={emmeModal} setEmmeModal={setEmmeModal} />}
+      {successNotification && (
+        <SuccessNotification
+          message={successNotification}
+          closeSuccessNotification={setSuccessNotification(null)}
+        />
+      )}
+      {emmeModal && (
+        <EmmeModal
+          track={emmeModal}
+          setEmmeModal={setEmmeModal}
+          setSuccessNotification={setSuccessNotification}
+        />
+      )}
       {data &&
         playlist == true &&
         data.items.map((item, index) => (
@@ -66,6 +82,7 @@ const HomepageGrid = (props) => {
             pauseTrack={pauseTrack}
             playing={playing}
             setEmmeModal={setEmmeModal}
+            homepage={true}
           />
         ))}
       <audio

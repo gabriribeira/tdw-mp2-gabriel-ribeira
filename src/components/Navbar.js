@@ -6,12 +6,14 @@ import AuthModal from "./AuthModal";
 import { useSelector } from "react-redux";
 import { clearUser } from "../app/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation();
   const [mobileModal, setMobileModal] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     switch (location.pathname) {
       case "/":
@@ -38,7 +40,7 @@ const Navbar = () => {
       {authModalOpen && (
         <AuthModal closeModal={() => setAuthModalOpen(false)} />
       )}
-      <nav className="w-screen sticky top-0 flex md:justify-center justify-between items-center bg-transparent text-[#2b2b2b] font-bold xl:text-[4.5rem] lg:text-[3.8rem] md:text-[2.3rem] text-[2rem] md:py-0 md:px-0 py-2 px-2 whitespace-pre z-[100] bg-white">
+      <nav className="w-screen sticky top-0 flex md:justify-center justify-between items-center bg-transparent text-preto font-bold xl:text-[4.5rem] lg:text-[3.8rem] md:text-[2.3rem] text-[2rem] md:py-0 md:px-0 py-2 px-2 whitespace-pre z-[100] bg-white">
         {location.pathname !== "/" && (
           <Link to={"/"} className="md:block hidden">
             HOME .
@@ -76,7 +78,7 @@ const Navbar = () => {
             className="md:block hidden"
             onClick={() => {
               dispatch(clearUser());
-              console.log("logout");
+              navigate("/");
             }}
           >
             {". "}

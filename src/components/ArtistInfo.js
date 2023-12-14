@@ -28,7 +28,7 @@ const ArtistInfo = ({ artistData, topTracksData }) => {
             />
           )}
         </div>
-        <div className="lg:w-[50vw] lg:h-[50vw] w-screen h-full bg-[#2b2b2b] flex flex-col justify-between">
+        <div className="lg:w-[50vw] lg:h-[50vw] w-screen h-full bg-preto flex flex-col justify-between">
           <h1 className="text-white font-bold xl:text-[6rem] lg:text-[4rem] md:text-[4rem] text-[3rem] w-full h-full leading-none tracking-tight uppercase lg:pl-10 pl-5 pt-5 line-clamp-4 align-top">
             {artistData.name}
           </h1>

@@ -10,6 +10,7 @@ const Calendar = ({ id }) => {
   let authUser = useSelector((state) => state.auth.user);
   const [user, setUser] = useState(null);
   const { data: visitedUser } = useGetUserByIdQuery(id);
+  const [reload, setReload] = useState(true);
   useEffect(() => {
     if (authUser) {
       setUser(authUser);
@@ -26,7 +27,8 @@ const Calendar = ({ id }) => {
     error,
     //eslint-disable-next-line
     isLoading,
-  } = useGetCalendarQuery(user && user.id);
+    refetch: refetchCalendar,
+  } = useGetCalendarQuery(user && user.id, { refetchOnMount: true });
 
   const handlePrevMonth = () => {
     setCurrentDate(
@@ -41,10 +43,16 @@ const Calendar = ({ id }) => {
         new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1),
     );
   };
+
+  useEffect(() => {
+    refetchCalendar();
+    setReload(false);
+  }, [reload]);
+
   return (
     user &&
     user.name && (
-      <div className="w-full bg-[#2b2b2b] text-white flex pt-10">
+      <div className="w-full bg-preto text-white flex pt-10">
         <div className="w-full flex flex-col">
           <div className="flex items-center justify-center md:text-2xl text-xl font-bold mb-5 md:gap-x-5 gap-x-2">
             <button onClick={handlePrevMonth}>
@@ -62,8 +70,12 @@ const Calendar = ({ id }) => {
               <SlArrowRight />
             </button>
           </div>
-          {user && (
-            <CalendarView entries={calendar} currentDate={currentDate} />
+          {user && calendar && !reload && (
+            <CalendarView
+              entries={calendar}
+              currentDate={currentDate}
+              setReload={setReload}
+            />
           )}
         </div>
       </div>

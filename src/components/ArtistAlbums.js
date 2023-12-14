@@ -8,7 +8,7 @@ const ArtistAlbums = ({ albumsData }) => {
   const [trackModal, setTrackModal] = useState(null);
   return (
     albumsData && (
-      <div className="bg-[#2b2b2b] w-full">
+      <div className="bg-preto w-full">
         {albumsData && albumsData.items.length > 0 && (
           <div className="overflow-x-scroll">
             <div

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useGetTrackByIdQuery } from "../app/spotifyApi";
 import ItemOverlay from "./ItemOverlay";
 
-const CalendarView = ({ entries, currentDate }) => {
+const CalendarView = ({ entries, currentDate, setReload }) => {
   const [dateFormatted, setDateFormatted] = useState(null);
   const [calendar, setCalendar] = useState([]);
   const [allEntries, setAllEntries] = useState([]);
@@ -115,10 +115,10 @@ const CalendarView = ({ entries, currentDate }) => {
         calendar.push(
           <div
             key={day}
-            className="col-span-1 w-full pb-[100%] relative flex justify-center items-center text-[#2b2b2b]"
+            className="col-span-1 w-full pb-[100%] relative flex justify-center items-center text-preto"
           >
             {tracksInMonth[day] ? (
-              <h1 className="absolute top-1 left-1 text-xl font-bold text-[#2b2b2b] z-[100]">
+              <h1 className="absolute top-1 left-1 text-xl font-bold text-preto z-[100]">
                 {day}
               </h1>
             ) : (
@@ -137,6 +137,7 @@ const CalendarView = ({ entries, currentDate }) => {
                 pauseTrack={pauseTrack}
                 playing={playing}
                 calendar={true}
+                setReload={setReload}
               />
             )}
           </div>,
@@ -146,15 +147,51 @@ const CalendarView = ({ entries, currentDate }) => {
       setCalendar(calendar);
     };
 
-    if (dateFormatted || calendarTracks) {
+    const generateCalendarWithoutTracks = () => {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const daysInMonth = getDaysInMonth(year, month);
+      const calendar = [];
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        calendar.push(
+          <div
+            key={day}
+            className="col-span-1 w-full pb-[100%] relative flex justify-center items-center text-preto"
+          >
+            <h1 className="absolute top-1 left-1 text-xl text-white font-bold">
+              {day}
+            </h1>
+          </div>,
+        );
+      }
+
+      setCalendar(calendar);
+    };
+
+    if (dateFormatted && calendarTracks) {
       generateCalendar();
+    } else if (dateFormatted && !calendarTracks) {
+      generateCalendarWithoutTracks();
     }
 
-    if (refreshCalendar || trackModal) {
-      setRefreshCalendar(false);
+    if ((refreshCalendar && calendarTracks) || (trackModal && calendarTracks)) {
       generateCalendar();
+      setRefreshCalendar(false);
+    } else if (
+      (refreshCalendar && !calendarTracks) ||
+      (trackModal && !calendarTracks)
+    ) {
+      generateCalendarWithoutTracks();
+      setRefreshCalendar(false);
     }
   }, [calendarTracks, dateFormatted, refreshCalendar, trackModal]);
+
+  useEffect(() => {
+    if (refreshCalendar && !trackModal) {
+      setRefreshCalendar(false);
+    }
+  }, [refreshCalendar, trackModal]);
 
   return (
     calendar && (
@@ -175,6 +212,7 @@ const CalendarView = ({ entries, currentDate }) => {
 CalendarView.propTypes = {
   currentDate: PropTypes.object,
   entries: PropTypes.array,
+  setReload: PropTypes.func,
 };
 
 export default CalendarView;

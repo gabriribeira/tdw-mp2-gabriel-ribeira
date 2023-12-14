@@ -5,6 +5,7 @@ import { BsEyeFill, BsEyeSlash } from "react-icons/bs";
 import { useLoginMutation, useRegisterMutation } from "../app/api";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../app/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const AuthModal = ({ closeModal }) => {
   const [authType, setAuthType] = useState(true);
@@ -23,6 +24,7 @@ const AuthModal = ({ closeModal }) => {
   const [registerUser, { isLoadingRegister, isErrorRegister }] =
     useRegisterMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,6 +38,8 @@ const AuthModal = ({ closeModal }) => {
         if (res.data) {
           dispatch(setToken(res.data.token));
           dispatch(setUser(res.data.user));
+          closeModal();
+          navigate("/profile");
         }
       });
     } catch (error) {
@@ -60,10 +64,12 @@ const AuthModal = ({ closeModal }) => {
         if (res.data) {
           dispatch(setToken(res.data.token));
           dispatch(setUser(res.data.user));
+          closeModal();
+          navigate("/profile");
         }
       });
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("Register failed:", error);
     }
   };
 
@@ -75,11 +81,11 @@ const AuthModal = ({ closeModal }) => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-[#2b2b2b]/50 flex justify-center items-center z-[101]">
+    <div className="fixed top-0 left-0 w-full h-full bg-preto/50 flex justify-center items-center z-[101]">
       <div
         className={`xl:w-[40vw] lg:w-[50vw] md:w-[70vw] w-[90vw] md:h-[50vh] ${
           authType ? "h-[30vh]" : "h-[50vh]"
-        } rounded-lg bg-[#2b2b2b] overflow-y-auto absolute flex flex-col lg:p-10 p-5`}
+        } rounded-lg bg-preto overflow-y-auto absolute flex flex-col lg:p-10 p-5`}
       >
         <h1 className="absolute left-3 top-3 text-2xl text-white font-bold">
           MEEM

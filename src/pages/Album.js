@@ -44,7 +44,7 @@ const Album = () => {
   }
 
   return (
-    <div className="bg-[#2b2b2b] min-h-screen">
+    <div className="bg-preto min-h-screen">
       <Navbar />
       <AlbumInfo albumData={albumsData} isPlaying={playing} />
       <AlbumDetails

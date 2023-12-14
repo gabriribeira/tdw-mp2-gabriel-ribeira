@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const AlbumDetails = ({ tracks, isPlaying, playTrack, pauseTrack, track }) => {
   return (
-    <div className="flex flex-col justify-end lg:p-10 md:p-5 p-2 bg-[#2b2b2b]">
+    <div className="flex flex-col justify-end lg:p-10 md:p-5 p-2 bg-preto">
       {tracks &&
         tracks.tracks.items.map((result) => (
           <div

@@ -14,15 +14,20 @@ const Meems = () => {
   const user_id = useSelector((state) => state.auth.user.id);
   //eslint-disable-next-line
   const { data, error, isLoading } = useGetEmmesQuery(user_id);
-  const { data: meemsList } = useGetTrackByIdQuery(
+  const { data: meemsList, refetch: meemsListRefetch } = useGetTrackByIdQuery(
     meems && meems?.map((element) => element.track_id),
+    { refetchOnMount: true, refetchOnReconnect: true },
   );
-  const { data: likedList } = useGetTrackByIdQuery(
+  const { data: likedList, refetch: likedListRefetch } = useGetTrackByIdQuery(
     liked && liked?.map((element) => element.track_id),
+    { refetchOnMount: true, refetchOnReconnect: true },
   );
-  const { data: dislikedList } = useGetTrackByIdQuery(
-    disliked && disliked?.map((element) => element.track_id),
-  );
+  const { data: dislikedList, refetch: dislikedListRefetch } =
+    useGetTrackByIdQuery(
+      disliked && disliked?.map((element) => element.track_id),
+      { refetchOnMount: true, refetchOnReconnect: true },
+    );
+  const [reload, setReload] = useState(true);
 
   useEffect(() => {
     if (data) {
@@ -30,7 +35,7 @@ const Meems = () => {
       setLiked(data.filter((element) => element.feedback == true));
       setDisliked(data.filter((element) => element.feedback == false));
     }
-  }, [data]);
+  }, [data, reload]);
 
   useEffect(() => {
     if (active == 0) {
@@ -42,82 +47,88 @@ const Meems = () => {
     if (active == 2) {
       setActiveMeems(dislikedList);
     }
-  }, [active, meemsList, likedList, dislikedList]);
+  }, [active, meemsList, likedList, dislikedList, reload]);
 
   useEffect(() => {
-    console.log(meems);
-    console.log(liked);
-    console.log(disliked);
-  }, [meems, liked, disliked]);
+    meemsListRefetch();
+    likedListRefetch();
+    dislikedListRefetch();
+    setReload(false);
+  }, [reload]);
 
   return (
-    <div className="min-h-screen  bg-[#2b2b2b]">
-      <Navbar />
-      <div className="relative flex sticky xl:top-[10vh] lg:top-[7vh] md:top-[5vh] z-[90] overflow-hidden h-full">
-        <div className="w-full border-b-2 border-b-[#2b2b2b] bg-white text-lg focus:outline-none text-[#2b2b2b] pt-10 md:grid md:grid-cols-3 flex overflow-x-scroll justify-around items-center">
-          <button
-            className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
-              active == 0 && "bg-[#2b2b2b] text-white"
-            } `}
-            onClick={() => setActive(0)}
-          >
-            MEEMS
-          </button>
-          <button
-            className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
-              active == 1 && "bg-[#2b2b2b] text-white"
-            }`}
-            onClick={() => setActive(1)}
-          >
-            LIKED
-          </button>
-          <button
-            className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
-              active == 2 && "bg-[#2b2b2b] text-white"
-            }`}
-            onClick={() => setActive(2)}
-          >
-            DISLIKED
-          </button>
+    !reload && (
+      <div className="min-h-screen  bg-preto">
+        <Navbar />
+        <div className="relative flex sticky xl:top-[10vh] lg:top-[7vh] md:top-[5vh] z-[90] overflow-hidden h-full">
+          <div className="w-full border-b-2 border-b-preto bg-white text-lg focus:outline-none text-[preto pt-10 md:grid md:grid-cols-3 flex overflow-x-scroll justify-around items-center">
+            <button
+              className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
+                active == 0 && "bg-preto text-white"
+              } `}
+              onClick={() => setActive(0)}
+            >
+              MEEMS
+            </button>
+            <button
+              className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
+                active == 1 && "bg-preto text-white"
+              }`}
+              onClick={() => setActive(1)}
+            >
+              LIKED
+            </button>
+            <button
+              className={`col-span-1 lg:text-5xl text-3xl font-bold w-full p-2 ${
+                active == 2 && "bg-preto text-white"
+              }`}
+              onClick={() => setActive(2)}
+            >
+              DISLIKED
+            </button>
+          </div>
         </div>
+        {active == 0 &&
+          data != null &&
+          data != [] &&
+          data &&
+          meemsList &&
+          meemsList != null &&
+          meemsList != [] && (
+            <MeemsList
+              items={activeMeems && activeMeems}
+              data={active == 0 ? meems : active == 1 ? liked : disliked}
+              setReload={setReload}
+            />
+          )}
+        {active == 1 &&
+          data != null &&
+          data != [] &&
+          data &&
+          likedList &&
+          likedList != null &&
+          likedList != [] && (
+            <MeemsList
+              items={activeMeems && activeMeems}
+              data={active == 0 ? meems : active == 1 ? liked : disliked}
+              setReload={setReload}
+            />
+          )}
+        {active == 2 &&
+          data != null &&
+          data != [] &&
+          data &&
+          dislikedList &&
+          dislikedList != null &&
+          dislikedList != [] && (
+            <MeemsList
+              items={activeMeems && activeMeems}
+              data={active == 0 ? meems : active == 1 ? liked : disliked}
+              setReload={setReload}
+            />
+          )}
       </div>
-      {active == 0 &&
-        data != null &&
-        data != [] &&
-        data &&
-        meemsList &&
-        meemsList != null &&
-        meemsList != [] && (
-          <MeemsList
-            items={activeMeems && activeMeems}
-            data={active == 0 ? meems : active == 1 ? liked : disliked}
-          />
-        )}
-      {active == 1 &&
-        data != null &&
-        data != [] &&
-        data &&
-        likedList &&
-        likedList != null &&
-        likedList != [] && (
-          <MeemsList
-            items={activeMeems && activeMeems}
-            data={active == 0 ? meems : active == 1 ? liked : disliked}
-          />
-        )}
-      {active == 2 &&
-        data != null &&
-        data != [] &&
-        data &&
-        dislikedList &&
-        dislikedList != null &&
-        dislikedList != [] && (
-          <MeemsList
-            items={activeMeems && activeMeems}
-            data={active == 0 ? meems : active == 1 ? liked : disliked}
-          />
-        )}
-    </div>
+    )
   );
 };
 

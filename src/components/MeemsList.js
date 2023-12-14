@@ -6,7 +6,7 @@ import ItemOverlay from "./ItemOverlay";
 import { GrAddCircle } from "react-icons/gr";
 import FeedbackModal from "./FeedbackModal";
 
-const MeemsList = ({ items, data }) => {
+const MeemsList = ({ items, data, setReload }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -116,7 +116,7 @@ const MeemsList = ({ items, data }) => {
     items.tracks != "[null, null, null, null]" &&
     data != null &&
     items != [] && (
-      <div className="flex flex-col bg-[#2b2b2b] h-full">
+      <div className="flex flex-col bg-preto h-full">
         <div className="pt-10 w-full">
           <input
             type="text"
@@ -162,6 +162,7 @@ const MeemsList = ({ items, data }) => {
                           <FeedbackModal
                             setFeedbackModal={() => setFeedbackModal(null)}
                             meem={data[index].id}
+                            setReload={setReload}
                           />
                         )}
                       </div>
@@ -189,7 +190,8 @@ const MeemsList = ({ items, data }) => {
                     <div className="flex items-center gap-x-2 lg:text-xl md:text-lg text-sm uppercase">
                       <img
                         src={
-                          "http://localhost:3001" +
+                          //eslint-disable-next-line
+                          process.env.REACT_APP_BACKEND_URL_IMG +
                           sender.filter(
                             (item) => item.id == data[index].sender_id,
                           )[0].img_url
@@ -249,6 +251,7 @@ const MeemsList = ({ items, data }) => {
                           <FeedbackModal
                             setFeedbackModal={() => setFeedbackModal(null)}
                             meem={data[index].id}
+                            setReload={setReload}
                           />
                         )}
                       </div>
@@ -271,7 +274,11 @@ const MeemsList = ({ items, data }) => {
                   >
                     <div className="flex items-center gap-x-2 lg:text-xl md:text-lg text-sm uppercase">
                       <img
-                        src={"http://localhost:3001" + sender[index].img_url}
+                        src={
+                          //eslint-disable-next-line
+                          process.env.REACT_APP_BACKEND_URL_IMG +
+                          sender[index].img_url
+                        }
                         alt={sender[index].username}
                         className="md:w-7 md:h-7 w-5 h-5 rounded-full object-cover"
                       />
@@ -307,6 +314,7 @@ const MeemsList = ({ items, data }) => {
 MeemsList.propTypes = {
   items: PropTypes.object,
   data: PropTypes.array,
+  setReload: PropTypes.func,
 };
 
 export default MeemsList;

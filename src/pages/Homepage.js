@@ -49,7 +49,7 @@ const Homepage = () => {
   return (
     <div>
       <Navbar />
-      {searchTodayCalendar && calendarTracks ? (
+      {searchTodayCalendar && calendarTracks && calendar ? (
         <HomepageGrid data={calendarTracks} playlist={false} />
       ) : (
         <HomepageGrid data={playlistTracks} playlist={true} />

@@ -13,6 +13,8 @@ const Booklet = ({ id }) => {
   let authUser = useSelector((state) => state.auth.user);
   const [user, setUser] = useState(null);
   const { data: visitedUser } = useGetUserByIdQuery(id);
+  //eslint-disable-next-line
+  const [reload, setReload] = useState(true);
   useEffect(() => {
     if (authUser) {
       setUser(authUser);
@@ -24,9 +26,18 @@ const Booklet = ({ id }) => {
   const [cleanTracks, setCleanTracks] = useState();
   const [cleanAlbums, setCleanAlbums] = useState();
   const [cleanArtists, setCleanArtists] = useState();
-  const { data: tracks } = useGetUserTracksQuery(user && user.id);
-  const { data: albums } = useGetUserAlbumsQuery(user && user.id);
-  const { data: artists } = useGetUserArtistsQuery(user && user.id);
+  const { data: tracks, refetch: refetchTracks } = useGetUserTracksQuery(
+    user && user.id,
+    { refetchOnMount: true },
+  );
+  const { data: albums, refetch: refetchAlbums } = useGetUserAlbumsQuery(
+    user && user.id,
+    { refetchOnMount: true },
+  );
+  const { data: artists, refetch: refetchArtists } = useGetUserArtistsQuery(
+    user && user.id,
+    { refetchOnMount: true },
+  );
 
   useEffect(() => {
     if (tracks) {
@@ -40,7 +51,7 @@ const Booklet = ({ id }) => {
       });
       setCleanTracks(cleanTracksAux);
     }
-  }, [tracks]);
+  }, [tracks, reload]);
   useEffect(() => {
     if (albums) {
       let cleanAlbumsAux = "";
@@ -53,7 +64,7 @@ const Booklet = ({ id }) => {
       });
       setCleanAlbums(cleanAlbumsAux);
     }
-  }, [albums]);
+  }, [albums, reload]);
   useEffect(() => {
     if (artists) {
       let cleanArtistsAux = "";
@@ -66,15 +77,39 @@ const Booklet = ({ id }) => {
       });
       setCleanArtists(cleanArtistsAux);
     }
-  }, [artists]);
+  }, [artists, reload]);
+
+  useEffect(
+    () => {
+      if (reload) {
+        if (authUser) {
+          setUser(authUser);
+          setReload(false);
+        } else if (visitedUser && visitedUser[0]) {
+          setUser(visitedUser[0]);
+          setReload(false);
+        }
+      }
+    },
+    //eslint-disable-next-line
+    [reload],
+  );
+
+  useEffect(() => {
+    refetchTracks();
+    refetchAlbums();
+    refetchArtists();
+    setReload(false);
+  }, [reload]);
 
   return (
-    <div className="bg-[#2b2b2b] flex flex-col w-full">
-      {(cleanArtists || cleanAlbums || cleanTracks) && (
+    <div className="bg-preto flex flex-col w-full">
+      {(cleanArtists || cleanAlbums || cleanTracks) && !reload && user && (
         <BookletSlider
           tracksb={cleanTracks}
           albumsb={cleanAlbums}
           artistsb={cleanArtists}
+          setReload={setReload}
         />
       )}
     </div>

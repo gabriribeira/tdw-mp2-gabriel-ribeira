@@ -95,7 +95,8 @@ const UserInfo = ({ id }) => {
           <img
             src={
               user.img_url
-                ? "http://localhost:3001" + user.img_url
+                ? //eslint-disable-next-line
+                  process.env.REACT_APP_BACKEND_URL_IMG + user.img_url
                 : DefaultImage
             }
             alt={"Profile Picture"}
@@ -108,14 +109,14 @@ const UserInfo = ({ id }) => {
             <label
               htmlFor="file_input"
               onClick={() => setEditType("photo")}
-              className="group-hover:block absolute hidden text-[#2b2b2b] text-4xl cursor-pointer"
+              className="group-hover:block absolute hidden text-preto text-4xl cursor-pointer"
             >
               CHANGE PHOTO
             </label>
           )}
         </div>
 
-        <div className="w-screen h-full bg-[#2b2b2b] flex flex-col pb-10">
+        <div className="w-screen h-full bg-preto flex flex-col pb-10">
           {isLoggedInUser ? (
             editType !== "name" ? (
               <h1 className="group relative flex items-center text-white font-bold lg:text-[8rem] text-[5rem] w-full leading-none tracking-tight uppercase align-top">
