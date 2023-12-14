@@ -212,11 +212,13 @@ const MeemsList = ({ items, data, setReload }) => {
                         className="md:w-7 md:h-7 w-5 h-5 rounded-full object-cover"
                       />
                       <p className="md:block hidden">
-                        {
+                        {sender &&
                           sender.filter(
                             (item) => item.id == data[index].sender_id,
-                          )[0].name
-                        }{" "}
+                          )[0].name &&
+                          sender.filter(
+                            (item) => item.id == data[index].sender_id,
+                          )[0].name}{" "}
                         {data[index] && formatDate(data[index].created_at)}
                       </p>
                     </div>
@@ -285,13 +287,19 @@ const MeemsList = ({ items, data, setReload }) => {
                         src={
                           //eslint-disable-next-line
                           process.env.REACT_APP_BACKEND_URL_IMG +
-                          sender[index].img_url
+                          (sender &&
+                            sender[index].img_url &&
+                            sender[index].img_url)
                         }
-                        alt={sender[index].username}
+                        alt={
+                          sender &&
+                          sender[index].username &&
+                          sender[index].username
+                        }
                         className="md:w-7 md:h-7 w-5 h-5 rounded-full object-cover"
                       />
                       <p className="md:block hidden">
-                        {sender[index].name} on{" "}
+                        {sender && sender[index].name && sender[index].name} on{" "}
                         {data[index] &&
                           data[index].created_at
                             .split(" ")[0]
